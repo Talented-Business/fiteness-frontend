@@ -26,11 +26,17 @@
           font-weight: 400;
           color: #333333;
           line-height: 1.5;
+          text-align: left;
+          i{
+            color:$primary-button-background-color;
+            font-size: 20px;
+            padding-right: 16px;
+          }
         }
       }
       .plan-footer {
         .plan-price {
-          color: #156376;
+          color: black;
           margin-bottom: 20px;
           .price-value,
           .price-figure {
@@ -62,8 +68,8 @@
         top: 0px;
         right: 0%;
         .border-line {
-          border-top: solid 20px #c8dc50;
-          border-right: solid 20px #c8dc50;
+          border-top: solid 20px $primary-button-background-color;
+          border-right: solid 20px $primary-button-background-color;
           float: right;
           width: 103px;
           height: 163px;
@@ -75,7 +81,7 @@
     .text-label {
       margin-top: 108px;
       .title {
-        color: $green-yellow-color;
+        color: white;
         font-size: $bg-title-size;
         font-weight: 700;
         text-transform: uppercase;
@@ -102,7 +108,7 @@
     overflow: hidden;
     pointer-events: none;
     .background {
-      background-image: url("../../img/pricing-banner.png");
+      background-image: url("../../img/pricing-banner.jpg");
       background-position: 50% 100%;
       background-size: cover;
       background-repeat: no-repeat;
@@ -177,8 +183,8 @@
             top: 0px;
             right: 0%;
             .border-line {
-              border-top: solid 15px #c8dc50;
-              border-right: solid 15px #c8dc50;
+              border-top: solid 15px $primary-button-background-color;
+              border-right: solid 15px $primary-button-background-color;
               float: right;
               width: 56px;
               height: 94px;

@@ -6,9 +6,9 @@ import { Prompt } from 'react-router';
 
 import Timer from "./Timer";
 import { doneWorkout,startWorkout,setRunning, stopRunning, setTimer, removeTimer } from "../../redux/done/actions";
-import { nextModalBlock,previousModalBlock,initialModalBlock } from "../../redux/workout/actions";
+import { nextModalBlock,previousModalBlock, goCreateComment } from "../../redux/workout/actions";
 
-const ModalBlock = ({ block,renderLine,setAll, handleOpen })=>{
+const ModalBlock = ({ block,renderLine,setAll, handleOpen, onHide })=>{
   const workout = process.env.REACT_APP_WORKOUT;
   const workouts = useSelector(({done})=>done.workouts);
   const isRunning = useSelector(({done})=>done.isRunning);
@@ -69,6 +69,16 @@ const ModalBlock = ({ block,renderLine,setAll, handleOpen })=>{
       dispatch(removeTimer());
     }
   },[block]);// eslint-disable-line react-hooks/exhaustive-deps
+  const openCreateComment = ()=>{
+    dispatch(goCreateComment({slug:block.slug,comment:block.comment}));
+  }
+  const renderCommentButton = ()=>{
+    return ['sin_content','con_content', 'extra_sin', 'fit', 'strong_male', 'strong_female', 'cardio'].includes(block.slug) && (
+      <button className={classnames("create-comment",{has:block.has_comment})} onClick={openCreateComment}>
+        <i className="far fa-comment" />
+      </button>
+    )
+  }
   return (
     <div className="block">
       <Prompt
@@ -98,11 +108,20 @@ const ModalBlock = ({ block,renderLine,setAll, handleOpen })=>{
       {
         step!==0 && step===workouts.current.blocks.length-1?(
           <div className="actions">
-            <button onClick={previousStep} className="previous">
+            {step>1&&<button onClick={previousStep} className="previous">
               Anterior
-            </button>
+              {/* <i className="fas fa-arrow-left" /> */}
+            </button>}
+            {step==1&&
+              <button  className="previous" onClick={onHide}>
+                Anterior
+                {/* <i className="fas fa-arrow-left" /> */}
+              </button>
+            }
+            {renderCommentButton()}
             <button onClick={(e)=>{e.stopPropagation();handleComplete(workouts.current);}} className={classnames("next",{checked:workouts.current.read})}>
               Completar
+              {/* <i className="fas fa-upload" /> */}
             </button>
           </div>  
         ):(
@@ -117,11 +136,20 @@ const ModalBlock = ({ block,renderLine,setAll, handleOpen })=>{
             <div className="actions">
               {step>1&&
                 <button  className="previous" onClick={previousStep}>
-                Anterior
-              </button>
+                  Anterior
+                  {/* <i className="fas fa-arrow-left" /> */}
+                </button>
               }
+              {step==1&&
+                <button  className="previous" onClick={onHide}>
+                  Anterior
+                  {/* <i className="fas fa-arrow-left" /> */}
+                </button>
+              }
+              {renderCommentButton()}
               <button onClick={()=>nextStep(block.slug,workouts.current)} className="next">
                 Siguiente
+                {/* <i className="fas fa-arrow-right" /> */}
               </button>
             </div>
           )

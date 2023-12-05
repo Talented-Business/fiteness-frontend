@@ -18,8 +18,8 @@
   .avatar-clip {
     img {
       width: 100%;
-      height: auto;
-      margin-top: -7px;
+      height: 100%;
+      object-fit: cover;
     }
   }
 }

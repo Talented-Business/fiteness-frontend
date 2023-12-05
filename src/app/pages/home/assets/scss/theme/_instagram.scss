@@ -7,6 +7,7 @@
       margin-left: auto;
       margin-right: auto;
       text-align: center;
+      color:black;
     }
   }
   .contentSm {
@@ -43,6 +44,7 @@
         display: block;
         width: 100%;
         height: 100%;
+        object-fit: cover;
       }
     }
   }

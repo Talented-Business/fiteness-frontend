@@ -1,0 +1,21 @@
+.customer-profile-section{
+  display: none;
+}
+@media (max-width: 991px) {
+  .customer-profile-section{
+    display: block;
+    .wrapper-side{
+      background: white;
+      padding: 35px 15px 15px 15px; 
+      @import "../_leftbar_profile.scss";
+      .btn{
+        font-size: 1rem!important;
+      }
+      .actions{
+        margin-left: calc(50% - 123px);
+      }
+      margin-bottom: 20px;
+    }    
+    @import "./_wrapper_rightbar.scss";
+  }
+}

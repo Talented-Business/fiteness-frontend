@@ -1,5 +1,5 @@
 import { persistReducer } from "redux-persist";
-import { put, call, takeLatest, takeLeading, select } from "redux-saga/effects";
+import { put, call, takeLatest, takeLeading, select, delay } from "redux-saga/effects";
 import storage from "redux-persist/lib/storage";
 import { http,fileDownload } from "../../app/pages/home/services/api";
 import {
@@ -92,18 +92,6 @@ export const reducer = persistReducer(
   }
 );
 
-export const actions = {
-  fetchIndexRequest: () => ({ type: actionTypes.CUSTOMER_INDEX_REQUEST }),
-
-  fetchIndexSuccess: payload => ({
-    payload,
-    type: actionTypes.CUSTOMER_INDEX_SUCCESS
-  }),
-
-  fetchIndexFailure: () => ({
-    type: actionTypes.CUSTOMER_INDEX_FAILURE
-  })
-};
 export const $fetchIndex = () => ({ type: actionTypes.CUSTOMER_INDEX_REQUEST });
 // ACTIONS CREATORS
 export function $pageSize(pageSize = INDEX_PAGE_SIZE_DEFAULT) {
@@ -257,6 +245,12 @@ function* changeItem({ id }) {
     }
   }
 }
+function downloadReady(path) {
+  return http({ path }).then(
+    response => response.data
+  );
+}
+
 function download(path){
   fileDownload({path}).then((response)=>{
     const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -268,13 +262,27 @@ function download(path){
   });
 }
 function* exportCustomers({searchCondition}){
-  console.log(searchCondition)
-  const path = `customers/export?${serializeQuery({
+  let path = `customers/export-ready?${serializeQuery({
     search: searchCondition.search,
     status: searchCondition.status
   })}`;
   yield put({type:actionTypes.CUSTOMER_EXPORT_START});
   try{
+    let status = 'start';
+    let first = true;
+    let uid = 0;
+    while(status === 'start'){
+      const response = yield call(downloadReady,path);
+      status = response.status;
+      if(first){
+        yield delay(5000);
+        first = false;
+      }
+      else yield delay(1000);
+      path = `customers/export-ready?uid=${response.uid}`;
+      uid = response.uid
+    }
+    path = `customers/export?uid=${uid}`;
     yield call(download,path);
     yield put({type:actionTypes.CUSTOMER_EXPORT_END});
   }catch(e){
@@ -316,7 +324,6 @@ function* exportReportUsage({from,to}){
     yield call(downloadReport,path,from,to,'Report-Usage-'+from+'-'+to+'.xlsx');
     yield put({type:actionTypes.CUSTOMER_EXPORT_END});
   }catch(e){
-    console.log(e)
     yield put({type:actionTypes.CUSTOMER_EXPORT_END});
   }
 }

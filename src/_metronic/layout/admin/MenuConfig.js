@@ -18,8 +18,15 @@ export default {
         title: "Customers",
         root: true,
         icon: "flaticon2-avatar",
-        can:["customers"],
+        can:["customers","social"],
         page: "admin/customers"
+      },
+      {
+        title: "Profile Managers",
+        root: true,
+        icon: "flaticon2-avatar",
+        can:["customers","social"],
+        page: "admin/managers"
       },
       {
         title: "Subscriptions",
@@ -83,6 +90,13 @@ export default {
         page: "admin/events"
       },
       {
+        title: "Evento",
+        root: true,
+        icon: "flaticon2-open-text-book",
+        can:["events"],
+        page: "admin/eventos"
+      },
+      {
         title: "Shortcodes",
         root: true,
         icon: "flaticon2-sort-alphabetically",
@@ -141,8 +155,15 @@ export default {
         title: "Shop",
         root: true,
         icon: "flaticon2-shopping-cart-1",
-        can:["shop"],
+        can:["shops"],
         page: "admin/companies"
+      },
+      {
+        title: "Reports",
+        root: true,
+        icon: "flaticon2-shopping-cart-1",
+        can:["events"],
+        page: "admin/reports"
       },
     ]
   }

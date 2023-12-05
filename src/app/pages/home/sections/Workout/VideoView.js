@@ -8,7 +8,7 @@ import "video-react/dist/video-react.css";
 import { Modal, Button } from "react-bootstrap";
 import { Markup } from "interweave";
 import { alternateVideo, convertContent, confirmAlternate } from "../../redux/workout/actions";
-import {isMobile,isIOS, detectswipe} from '../../../../../_metronic/utils/utils';
+import {isMobile, detectswipe} from '../../../../../_metronic/utils/utils';
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -22,6 +22,7 @@ const VideoView = ({onClose}) => {
   const dispatch = useDispatch();
   const video = useSelector(({workout})=>workout.video);
   const originalVideo = useSelector(({workout})=>workout.originalVideo);
+  const currentUser = useSelector(({auth})=>auth.currentUser);
   const [instructionShow,setInstructionShow] = useState(false);
   const modalVideo = useSelector(({workout})=>workout.modalVideo);
   const videoRef = useRef();
@@ -70,14 +71,13 @@ const VideoView = ({onClose}) => {
     }
   },[video]);
   useEffect(()=>{
-    // document.body.style.cssText = "overflow:hidden !important";
     if(isMobile()) {
       const mobileBack = document.getElementsByClassName("modal-backdrop")[0];
       mobileBack.style.backgroundColor = "#1a1a1a";
       if(mobileBack.classList.contains("show"))mobileBack.style.opacity = "1";
       detectswipe('video_modal',swapeMobile);
       const chat = document.getElementById("wabi-floating-button");
-      chat.style.zIndex = 0;
+      if(chat)chat.style.zIndex = 0;
     }else{
       const videoDialog = document.getElementsByClassName("video-dialog")[0];
       if(videoDialog)videoDialog.style.width = (window.innerHeight * 9 / 16 ) + "px";
@@ -88,7 +88,7 @@ const VideoView = ({onClose}) => {
         if(document.exitFullscreen)document.exitFullscreen();
         setFullScreen(false);
         const chat = document.getElementById("wabi-floating-button");
-        chat.style.zIndex = 2147483646;
+        if(chat)chat.style.zIndex = 2147483646;
       }
     }
   },[]);
@@ -154,13 +154,13 @@ const VideoView = ({onClose}) => {
       </div>
       {(video.alternate_a || video.alternate_b)&&
         <div className="workout-alternate mt-5">
-          {video.alternate_a&&
-            <button type="button" className={"back-button alternate_a"} onClick={() => changeVideo('alternate_a')}>
+          {video.alternate_b&&
+            <button type="button" className={"back-button alternate_b"} onClick={() => changeVideo('alternate_b')}>
               <i className="fas fa-chevron-left" />
             </button>              
           }
-          {video.alternate_b&&
-            <button type="button" className={"back-button alternate_b"} onClick={() => changeVideo('alternate_b')}>
+          {video.alternate_a&&
+            <button type="button" className={"back-button alternate_a"} onClick={() => changeVideo('alternate_a')}>
               <i className="fas fa-chevron-right" />
             </button>              
           }
@@ -173,9 +173,11 @@ const VideoView = ({onClose}) => {
         <button type="button" className={"btn back"} onClick={()=>{setInstructionShow(true)}}>
           Instrucciones
         </button>              
-        <button type="button" className={"btn swap"} onClick={handleAlernateModal}>
-          Escoger
-        </button>              
+        {currentUser&&
+          <button type="button" className={"btn swap"} onClick={handleAlernateModal}>
+            Alternar
+          </button>              
+        }
       </div>
       <Modal
         show={instructionShow}
@@ -198,7 +200,7 @@ const VideoView = ({onClose}) => {
         className={classnames("alternate-modal")}>
         <Modal.Dialog>
           <Modal.Body>
-            <p>¿Deseas alternar Mov A por Mov B?</p>
+            <p>¿Deseas alternar {originalVideo.name} por {video.name}?</p>
           </Modal.Body>
 
           <Modal.Footer className="actions">

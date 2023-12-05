@@ -9,11 +9,17 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import classnames from "classnames";
 
 import FormGroup from "./components/FormGroup";
-import ThreeColumn from "./layouts/Three";
+import TwoColumn from "./layouts/Two";
 import PageHeader from "./layouts/PageHeader";
 import { http } from "./services/api";
 import { serializeQuery } from "../../../app/components/utils/utils";
 import { authenticate as regenerateAuthAction } from "./redux/auth/actions";
+import "./assets/scss/theme/style.scss";
+import "./assets/scss/theme/mbr-additional.css";
+import "./assets/scss/dropdown/style.css";
+import "./assets/scss/theme/common.scss";
+import "./assets/scss/theme/login.scss";
+import "./assets/scss/theme/signup.scss";
 
 const validate = values => {
   const errors = {};
@@ -127,8 +133,8 @@ const LevelPage = () => {
         content="Nivel Físico -Fitemos"
       />
     </MetaTags>
-    <ThreeColumn>
-      <PageHeader title={`Nivel Físico`}/>
+    <TwoColumn>
+      <PageHeader title={`Nivel Físico`} backUrl={`/profile`}/>
       <div className="row condition-level">
         <div className="col-12 col-md-7">
           <div>
@@ -276,7 +282,7 @@ const LevelPage = () => {
           </div>
         </div>
       </div>
-    </ThreeColumn>
+    </TwoColumn>
   </>
 )};
 

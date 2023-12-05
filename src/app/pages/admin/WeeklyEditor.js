@@ -15,7 +15,8 @@ import {
   $openPreviewCell,
   $updateItemValue,
   $submitContent,
-  $updateImage
+  $updateImage,
+  $removeImage,
 } from "../../../modules/subscription/cms";
 import WorkoutEditDialog from "./dialog/WorkoutEditDialog";
 import WorkoutImageEditDialog from "./dialog/WorkoutImageEditDialog";
@@ -72,6 +73,7 @@ function Main({
   $updateItemValue,
   $submitContent,
   $updateImage,
+  $removeImage,
   $openPreviewCell,
   previewContent
 }) {
@@ -181,7 +183,7 @@ function Main({
       case 6:
         if (column !== "blog") return false;
         break;
-      default:  
+        default:  
     }
     return true;
   };
@@ -343,7 +345,7 @@ function Main({
                     })}
                   >
                     {data[row+'_timer_type'] !== undefined &&
-                      data[row+'_timer_type'][col] !== undefined && data[row+'_timer_type'][col] !== "" && data[row+'_timer_type'][col] !== null && (
+                      data[row+'_timer_type'][col] !== undefined && data[row+'_timer_type'][col] !== "" && data[row+'_timer_type'][col] !== "null" && data[row+'_timer_type'][col] !== null && (
                         <div className={classes.timer}>
                           {data[row+'_timer_type'][col]!='tabata'?
                             <>
@@ -412,6 +414,7 @@ function Main({
         updateImage={$updateImage}
         handleChange={handleChange}
         handleSave={handleSave}
+        removeImage={$removeImage}
       />
       <WorkoutEditDialog 
         open={openBlog} 
@@ -489,6 +492,7 @@ const mapDispatchToProps = {
   $updateItemValue,
   $submitContent,
   $updateImage,
+  $removeImage,
 };
 const WeeklyEditor = injectIntl(
   connect(mapStateToProps, mapDispatchToProps)(Main)
@@ -505,6 +509,7 @@ class Sub extends Component {
     this.props.$fetchWeeklyCms(this.props.history);
   }
   getWeekDays(date) {
+    date.setHours(18);
     let copiedDate = new Date(date.getTime());
     const options = { year: "numeric", month: "short", day: "numeric" };
     const weekDay = copiedDate.getDay();

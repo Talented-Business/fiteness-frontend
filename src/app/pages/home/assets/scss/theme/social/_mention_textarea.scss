@@ -1,0 +1,78 @@
+.comment-input-container{
+  border-top: 1px solid #ebebeb;
+  .mentions{
+    margin: 1em 0;
+  }  
+  .mentions--multiLine{
+    .mentions__control{
+      
+    }
+    .mentions__highlighter {
+      padding: 0 0.5rem;
+      strong[class^="css-"]{
+        &[class*="-0-2-"]{
+          background-color: rgb(206, 228, 229);
+        }
+      }
+    }
+    .mentions__input{
+      padding: 0 0.5rem;
+      outline: 0;
+      border: 0;
+    }  
+  }
+  .emoji__button {
+    position: absolute;
+    cursor: pointer;
+    padding: 1rem 0rem;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border: 0;
+  }
+  .emoji__picker {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    float: right;
+    margin-left: 200px;
+  }
+  .send-text{
+    padding: 1rem 0 0;
+    color: #8f908f;
+    margin-bottom: 0;
+    background-color: white;
+    border: 0;    
+  }
+}
+.mention-customers{
+  background-color: white;
+  border-top:1px solid rgba($basic-text-color, 0.5);
+  border-left:1px solid rgba($basic-text-color, 0.5);
+  border-right:1px solid rgba($basic-text-color, 0.5);
+  &.focused{
+    background-color: rgb(206, 228, 229);
+  }
+  .avatar{
+    display: inline-block;
+    margin: 5px;
+    vertical-align: top;
+  }
+  .info{
+    display: inline-block;
+    .username{
+      margin-top: 10px;
+      color:rgba($basic-text-color, 0.5);
+    }
+  }
+}
+.dropdown-menu.popup{
+  .avatar{
+    display: inline-block;
+    margin: 5px;
+    vertical-align: top;
+  }
+  .info{
+    display: inline-block;
+  }
+}

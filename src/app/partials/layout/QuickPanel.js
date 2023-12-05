@@ -1,514 +1,195 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid,no-undef */
-import React from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Nav, Tab } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import classnames from "classnames";
+import { useHistory } from "react-router-dom";
+import { accept, reject, setItemValue } from "../../pages/home/redux/notification/actions";
+import { toAbsoluteUrl } from "../../../_metronic/utils/utils";
+import { convertTime } from "../../../lib/common";
+import ViewableMonitor from '../../pages/home/components/ViewableMonitor';
 
 const perfectScrollbarOptions = {
   wheelSpeed: 2,
   wheelPropagation: false
 };
-
-export default class QuickPanel extends React.Component {
-  state = { selectedTab: "Notifications" };
-  setTab = _tabName => {
-    this.setState({ selectedTab: _tabName });
-  };
-
-  render() {
-    return (
-      <div id="kt_quick_panel" className="kt-quick-panel">
-        <a
-          href="#"
-          className="kt-quick-panel__close"
-          id="kt_quick_panel_close_btn"
-        >
-          <i className="flaticon2-delete" />
-        </a>
-        <Tab.Container defaultActiveKey={this.state.selectedTab}>
-          <div className="kt-quick-panel__nav">
-            <Nav
-              onSelect={this.setTab}
-              className="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand kt-notification-item-padding-x"
-            >
-              <Nav.Item className="nav-item">
-                <Nav.Link eventKey="Notifications" className="nav-link show">
-                  Notifications
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="AuditLogs" className="nav-link show">
-                  Audit Logs
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey="Settings" className="nav-link show">
-                  Settings
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-          </div>
-          <div className="kt-quick-panel__content">
-            <Tab.Content>
-              <Tab.Pane eventKey="Notifications">
-                <PerfectScrollbar
-                  options={perfectScrollbarOptions}
-                  style={{
-                    maxHeight: "calc(100vh - 100px)",
-                    position: "relative"
-                  }}
-                >
-                  <div className="kt-notification">
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-line-chart kt-font-success" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New order has been received
-                        </div>
-                        <div className="kt-notification__item-time">
-                          2 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-box-1 kt-font-brand" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New customer is registered
-                        </div>
-                        <div className="kt-notification__item-time">
-                          3 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-chart2 kt-font-danger" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          Application has been approved
-                        </div>
-                        <div className="kt-notification__item-time">
-                          3 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-image-file kt-font-warning" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New file has been uploaded
-                        </div>
-                        <div className="kt-notification__item-time">
-                          5 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-drop kt-font-info" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New user feedback received
-                        </div>
-                        <div className="kt-notification__item-time">
-                          8 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-pie-chart-2 kt-font-success" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          System reboot has been successfully completed
-                        </div>
-                        <div className="kt-notification__item-time">
-                          12 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-favourite kt-font-danger" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New order has been placed
-                        </div>
-                        <div className="kt-notification__item-time">
-                          15 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      href="#"
-                      className="kt-notification__item kt-notification__item--read"
-                    >
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-safe kt-font-primary" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          Company meeting canceled
-                        </div>
-                        <div className="kt-notification__item-time">
-                          19 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-psd kt-font-success" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New report has been received
-                        </div>
-                        <div className="kt-notification__item-time">
-                          23 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon-download-1 kt-font-danger" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          Finance report has been generated
-                        </div>
-                        <div className="kt-notification__item-time">
-                          25 hrs ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon-security kt-font-warning" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New customer comment recieved
-                        </div>
-                        <div className="kt-notification__item-time">
-                          2 days ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification__item">
-                      <div className="kt-notification__item-icon">
-                        <i className="flaticon2-pie-chart kt-font-warning" />
-                      </div>
-                      <div className="kt-notification__item-details">
-                        <div className="kt-notification__item-title">
-                          New customer is registered
-                        </div>
-                        <div className="kt-notification__item-time">
-                          3 days ago
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </PerfectScrollbar>
-              </Tab.Pane>
-              <Tab.Pane eventKey="AuditLogs">
-                <PerfectScrollbar
-                  options={perfectScrollbarOptions}
-                  style={{
-                    maxHeight: "calc(100vh - 100px)",
-                    position: "relative"
-                  }}
-                >
-                  <div className="kt-notification-v2">
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon-bell kt-font-brand" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          5 new user generated report
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Reports based on sales
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon2-box kt-font-danger" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          2 new items submited
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          by Grog John
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon-psd kt-font-brand" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          79 PSD files generated
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Reports based on sales
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon2-supermarket kt-font-warning" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          $2900 worth products sold
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Total 234 items
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon-paper-plane-1 kt-font-success" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          4.5h-avarage response time
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Fostest is Barry
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon2-information kt-font-danger" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          Database server is down
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          10 mins ago
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon2-mail-1 kt-font-brand" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          System report has been generated
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Fostest is Barry
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#" className="kt-notification-v2__item">
-                      <div className="kt-notification-v2__item-icon">
-                        <i className="flaticon2-hangouts-logo kt-font-warning" />
-                      </div>
-                      <div className="kt-notification-v2__itek-wrapper">
-                        <div className="kt-notification-v2__item-title">
-                          4.5h-avarage response time
-                        </div>
-                        <div className="kt-notification-v2__item-desc">
-                          Fostest is Barry
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                </PerfectScrollbar>
-              </Tab.Pane>
-              <Tab.Pane eventKey="Settings">
-                <PerfectScrollbar
-                  options={perfectScrollbarOptions}
-                  style={{
-                    maxHeight: "calc(100vh - 100px)",
-                    position: "relative"
-                  }}
-                >
-                  <div className="kt-quick-panel__content-padding-x">
-                    <form className="kt-form">
-                      <div className="kt-heading kt-heading--sm kt-heading--space-sm">
-                        Customer Care
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Enable Notifications:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--success kt-switch--sm">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_1"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Enable Case Tracking:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--success kt-switch--sm">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_2"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-last form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Support Portal:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--success kt-switch--sm">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_2"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="kt-separator kt-separator--space-md kt-separator--border-dashed" />
-                      <div className="kt-heading kt-heading--sm kt-heading--space-sm">
-                        Reports
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Generate Reports:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--danger">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_3"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Enable Report Export:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--danger">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_3"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-last form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Allow Data Collection:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--danger">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_4"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="kt-separator kt-separator--space-md kt-separator--border-dashed" />
-                      <div className="kt-heading kt-heading--sm kt-heading--space-sm">
-                        Members
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Enable Member singup:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--brand">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_5"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Allow User Feedbacks:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--brand">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_5"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                      <div className="form-group form-group-last form-group-xs row">
-                        <label className="col-8 col-form-label">
-                          Enable Customer Portal:
-                        </label>
-                        <div className="col-4 kt-align-right">
-                          <span className="kt-switch kt-switch--sm kt-switch--brand">
-                            <label>
-                              <input
-                                type="checkbox"
-                                name="quick_panel_notifications_6"
-                              />
-                              <span />
-                            </label>
-                          </span>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </PerfectScrollbar>
-              </Tab.Pane>
-            </Tab.Content>
-          </div>
-        </Tab.Container>
-      </div>
-    );
+const FollowItem = ({request})=>{
+  const dispatch = useDispatch();
+  const handleReject = ()=>{
+    dispatch(reject(request.id));
   }
+  const handleAccept = ()=>{
+    dispatch(accept(request.id));
+  }
+  return (
+    <span className="kt-notification-v2__item">
+      <div className="kt-notification-v2__item-icon">
+        <img src={request.customer.avatarUrls['small']} alt={request.customer.first_name +' '+ request.customer.last_name}/>
+      </div>
+      <div className="kt-notification-v2__itek-wrapper">
+        <div className="kt-notification-v2__item-title">
+          {request.customer.first_name +' '+ request.customer.last_name}
+        </div>
+        <div className="kt-notification-v2__item-desc">
+          {request.customer.username}
+        </div>
+        <div className="actions">
+          <button className="btn btn-custom-secondary" onClick={handleReject}>Reject</button>
+          <button className="btn btn-custom-third" onClick={handleAccept}>Accept</button>
+        </div>
+      </div>
+    </span>    
+  )
 }
+const convertContent = (content)=>{
+  const regexp = /(<b>.+?<\/b>)/g;
+  const singleReg = /(<b>(.+?)<\/b>)/g;
+  let newWords = content.split(regexp);  
+  const jsonWords = newWords.map(newWord=>{
+    let word;
+    const matches = [...newWord.matchAll(singleReg)];    
+    if(matches.length>0){
+      word = {
+        type:"bold",
+        word:matches[0][2]
+      }
+    }else{
+      word = {
+        type:"span",
+        word:newWord
+      }
+    }
+    return word;
+  })
+  return <>
+    {
+      jsonWords.map((word, index)=><span key={index} className={classnames({"font-weight-bold":word.type=="bold"})}>
+        {word.word}
+      </span>)
+    }
+  </>
+}
+const QuickPanel = ()=> {
+  const followRequests = useSelector(({notification})=>notification.follows);
+  const [expand, setExpand] = useState(false);
+  const notifications = useSelector(({notification})=>notification.notifications);
+  const dispatch = useDispatch();
+  const changeNotificationViewLastId = ()=>{
+    let lastId = 0;
+    if(notifications.length>0){
+      lastId = notifications[0].id;
+    }
+    dispatch(setItemValue({name:"notificationViewLastId",value:lastId}));
+  }
+  const [visible, setVisible] = useState(false);
+  const visibleChange = (status)=>{
+    setVisible(status);
+    if(status){
+      changeNotificationViewLastId();
+    }
+  }
+  useEffect(()=>{
+    if(visible){
+      changeNotificationViewLastId();
+    }
+  }, [notifications.length]);
+  const history = useHistory();
+  const clickNotification = (notification)=>{
+    if(notification.action_type === "customer"){
+      if(notification.object_type === 'post'){
+        history.push("/posts/"+ notification.object_id);
+        if(closeBtnRef && closeBtnRef.current )closeBtnRef.current.click();
+      }else{
+        history.push("/"+ notification.action.username);
+        if(closeBtnRef && closeBtnRef.current )closeBtnRef.current.click();
+      }
+    }else if(notification.action_type === "fitemos"){
+      if(notification.type === "payment_renewal"){
+        history.push("/settings/subscriptions");
+        if(closeBtnRef && closeBtnRef.current )closeBtnRef.current.click();
+      }
+    }
+  }
+  const closeBtnRef = useRef();
+  return (
+    <div id="kt_quick_panel" className="kt-quick-panel">
+      <a
+        href="#"
+        className="kt-quick-panel__close"
+        id="kt_quick_panel_close_btn"
+        ref={closeBtnRef}
+      >
+        <i className="flaticon2-delete" />
+      </a>
+      <div className="notification-title">
+        Notificaciones
+      </div>
+      <div className="kt-quick-panel__content">
+        <PerfectScrollbar
+          options={perfectScrollbarOptions}
+          style={{
+            maxHeight: "calc(100vh - 100px)",
+            position: "relative"
+          }}
+        >
+          <div className="kt-notification-v2">
+          { (notifications.length === 0 && followRequests.length ===0 )?
+            <div className="notification-title">
+              No Notificaciones
+            </div>              
+            :
+            <>
+            {followRequests.length>0&&(followRequests.length==1?<>
+                <FollowItem request={followRequests[0]} />
+              </>:
+                expand?
+                  followRequests.map(request=>
+                    <FollowItem request={request} key={request.id}/>
+                    )
+                  :
+                  <span className="kt-notification-v2__item cursor-pointer" onClick={()=>setExpand(true)}>
+                    <div className="kt-notification-v2__item-icon">
+                      <img src={followRequests[0].customer.avatarUrls['small']} alt={followRequests[0].customer.first_name +' '+ followRequests[0].customer.last_name}/>
+                    </div>
+                    <div className="kt-notification-v2__itek-wrapper">
+                      <div className="kt-notification-v2__item-title">
+                        Follow Request
+                      </div>
+                      <div className="kt-notification-v2__item-desc">
+                        Approve or ignore requests
+                      </div>
+                    </div>
+                  </span>
+            )}
+            <ViewableMonitor visibleChange = {visibleChange}>
+            {isViewable =>
+              <span>&nbsp;</span>
+            }
+            </ViewableMonitor>
+            
+              {notifications.map(notification=>
+                <span className="kt-notification-v2__item cursor-pointer" key={notification.id} onClick={()=>clickNotification(notification)}>
+                  <div className="kt-notification-v2__item-icon">
+                    {notification.action_type === "fitemos"?
+                      <img src={toAbsoluteUrl('/media/logos/logo-mini-sm.png')} />
+                      :
+                      <img src={notification.action.avatarUrls['small']} alt={notification.action.first_name +' '+ notification.action.last_name}/>
+                    }                  
+                  </div>
+                  <div className="kt-notification-v2__itek-wrapper">
+                    <div className="kt-notification-v2__item-desc" style={{color:"#0C2A49"}}>
+                      {convertContent(notification.content)}
+                      <span style={{color:"#707C89",display:"block",marginLeft:'-5px'}}>&nbsp;&nbsp;{convertTime(notification.created_at)}</span>
+                    </div>
+                  </div>
+                </span>
+              )}            
+            </>
+            }
+          </div>
+        </PerfectScrollbar>
+      </div>
+    </div>
+  );
+}
+export default QuickPanel;

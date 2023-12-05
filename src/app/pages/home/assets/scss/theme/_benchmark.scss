@@ -1,6 +1,6 @@
 .benchmarks {
   .content {
-    margin: 14px 5px;
+    margin: 30px 6px;
     border-radius: 7px;
     background-color: #fff;
     .image{
@@ -9,8 +9,9 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      height: 230px;
+      // height: 230px;
       position: relative;
+      padding-bottom: 78%;
       .background {
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;

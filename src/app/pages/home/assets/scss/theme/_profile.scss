@@ -116,14 +116,63 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
   }  
-  .auth-form .form-control select{
-    background-color: transparent;
-    border: 0;
-    width: 100%;
-    &:focus{
-      outline-width: 0;
+  .auth-form{
+    .form-control select{
+      background-color: transparent;
+      border: 0;
+      width: 100%;
+      &:focus{
+        outline-width: 0;
+      }
     }
-  }
+    .react-tel-input {
+      .form-control{
+        font-size: revert;
+        width: inherit;
+        color:$basic-text-color;
+      }
+      .flag-dropdown,.form-control{
+        border: 1px solid $primary-button-background-color;        
+      }
+    }
+    .edit-peso{
+      transform: translate3d(8px, -6px, 0) scale(0.8);
+      color: #696969;
+      font-weight: 400; 
+      position: absolute;
+      z-index: 3;           
+      background-color: white;
+      padding: 0 10px;
+      top: -5px;
+      left: 0px;
+    }
+    .btn-edit-peso{
+      border: 1px solid $primary-button-background-color;
+      margin: 0;
+      justify-content: left;
+      text-align: left;
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 7px;
+      color: $basic-text-color;
+      font-size: 16px;
+    }
+    .description{
+      .form-control{
+        height:122px;
+        textarea{
+          width: 100%;
+          border:0;
+          &:focus{
+            outline-width: 0;
+          }          
+        }
+      }
+    }
+    .fs-btn{
+      margin:10px auto;
+    }
+  } 
 }
 .dropzone{
   display: flex;

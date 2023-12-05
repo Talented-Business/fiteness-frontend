@@ -57,7 +57,7 @@ const initialState = {
   frontData:[],
   frontMeta: {
     page: 1,
-    pageSize: 9,
+    pageSize: 12,
     pageTotal: 1,
     total: 0
   },
@@ -74,6 +74,7 @@ const initialState = {
     search: ""
   },
   uploadImage: null,
+  uploadPostImage: null,
   errors: {
     title: "",
     description: ""
@@ -129,7 +130,8 @@ export const reducer = persistReducer(
           updatedItem: action.item,
           isloading: false,
           isSaving: false,
-          uploadImage: null
+          uploadImage: null,
+          uploadPostImage:null
         };
       case actionTypes.COMPANY_CHANGE_SAVE_STATUS:
         return { ...state, isSaving: action.status };
@@ -144,6 +146,13 @@ export const reducer = persistReducer(
         }
         return { ...state, published: clonedPublished };
       case actionTypes.COMPANY_FRONT_INDEX_SUCCESS:
+        if(parseInt(action.currentPage)===1){
+          return {
+            ...state,
+            frontData: [...action.frontData],
+            frontMeta: { ...state.frontMeta, ...action.frontMeta }
+          };  
+        }
         return {
           ...state,
           frontData: [...state.frontData,...action.frontData],
@@ -185,8 +194,11 @@ export function $saveItem(history) {
 export function $updateItemImage(image) {
   return { type: actionTypes.COMPANY_UPLOAD_IMAGE, image };
 }
+export function $updateItemPostImage(image) {
+  return { type: actionTypes.COMPANY_SET_VALUE, key:"uploadPostImage",value:image };
+}
 export function $setNewItem() {
-  const item = { id: null, name: "", phone: "", mail: "", image: "",date:"",description:"",all:"",mobile_phone:"", website_url:"",address:"",facebook:"", instagram:"", twitter:"", horario:"" };
+  const item = { id: null, username:"",name: "", phone: "", mail: "", image: "",date:"",description:"",all:"",mobile_phone:"", website_url:"",address:"",facebook:"", instagram:"", twitter:"", horario:"" };
   return { type: actionTypes.COMPANY_SET_ITEM, item};
 }
 export function $changeItem(id) {
@@ -297,6 +309,7 @@ function* searchCompany({ name, value }) {
 }
 const saveCompany = company => {
   const formData = new FormData();
+  formData.append("username", company.item.username);
   formData.append("name", company.item.name);
   formData.append("mail", company.item.mail);
   formData.append("phone", company.item.phone);
@@ -319,6 +332,12 @@ const saveCompany = company => {
     const files = Array.from(company.uploadImage);
     files.forEach((file, i) => {
       formData.append("logo", file);
+    });
+  }
+  if (company.uploadPostImage) {
+    const files = Array.from(company.uploadPostImage);
+    files.forEach((file, i) => {
+      formData.append("post_image", file);
     });
   }
   if (company.item.id) {
@@ -344,7 +363,6 @@ const saveCompany = company => {
 };
 function* saveItem({ history }) {
   const company = yield select(store => store.company);
-  console.log(company)
   try {
     const result = yield call(saveCompany, company);
     if (result.company) {
@@ -359,7 +377,10 @@ function* saveItem({ history }) {
         });
 
       }
-      if(result.errors.logo){
+      if(result.errors.username){
+        alert(result.errors.username);
+      }
+      else if(result.errors.logo){
         alert(result.errors.logo);
       }
       else if(result.errors.name){
@@ -419,8 +440,6 @@ function* callAction({ action, id }) {
   try {
     yield call(companyActionRequest, action, id);
     const company = yield select(store => store.company);
-    console.log(company);
-   
     if (action === "delete") {
       yield put({ type: actionTypes.COMPANY_INDEX_REQUEST });
     } else {
@@ -519,6 +538,7 @@ function* fetchFrontCompany(){
     const result = yield call(companiesFrontRequest, company.frontMeta);
     yield put({
       type: actionTypes.COMPANY_FRONT_INDEX_SUCCESS,
+      currentPage:result.current_page,
       frontData: result.data,
       frontMeta: { total: result.total, pageTotal: result.last_page }
     });

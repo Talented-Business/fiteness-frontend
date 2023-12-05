@@ -25,6 +25,8 @@ import * as medal from "../../modules/subscription/medal";
 import * as survey from "../../modules/subscription/survey";
 import * as company from "../../modules/subscription/company";
 import * as product from "../../modules/subscription/product";
+import * as evento from "../../modules/subscription/evento";
+import * as report from "../../modules/subscription/report";
 import { metronic } from "../../_metronic";
 import alertReducer from "../pages/home/redux/alert/reducer";
 import authReducer from "../pages/home/redux/auth/reducer";
@@ -49,8 +51,11 @@ import registrationReducer from "../pages/home/redux/registration/reducer";
 import vouchersReducer from "../pages/home/redux/vouchers/reducer";
 import doneReducer from "../pages/home/redux/done/reducer";
 import workoutReducer from "../pages/home/redux/workout/reducer";
-//import { clearState } from './actions';
-//import { getStateFromCookies } from '../middlewares/cookie';
+import peopleReducer from "../pages/home/redux/people/reducer";
+import postReducer from "../pages/home/redux/post/reducer";
+import notificationReducer from "../pages/home/redux/notification/reducer";
+import dialogReducer from "../pages/home/redux/dialogs/reducer";
+import messageReducer from "../pages/home/redux/messages/reducer";
 
 //import accountDeleted from './accountDeleted/saga';
 import alert from "../pages/home/redux/alert/saga";
@@ -75,6 +80,11 @@ import userSettings from "../pages/home/redux/userSettings/saga";
 import vouchers from "../pages/home/redux/vouchers/saga";
 import done from "../pages/home/redux/done/saga";
 import workout from "../pages/home/redux/workout/saga";
+import people from "../pages/home/redux/people/saga";
+import post from "../pages/home/redux/post/saga";
+import notification from "../pages/home/redux/notification/saga";
+import dialog from "../pages/home/redux/dialogs/saga";
+import message from "../pages/home/redux/messages/saga";
 
 
 export const rootReducer = combineReducers({
@@ -96,6 +106,7 @@ export const rootReducer = combineReducers({
   weekWorkout:weekWorkout.reducer,
   category: category.reducer,
   event: event.reducer,
+  evento: evento.reducer,
   benchmark: benchmark.reducer,
   tocken: tocken.reducer,
   cartSetting:cartSetting.reducer,
@@ -115,6 +126,12 @@ export const rootReducer = combineReducers({
   survey: survey.reducer,
   company: company.reducer,
   product: product.reducer,
+  report: report.reducer,
+  people:peopleReducer,
+  post:postReducer,
+  notification:notificationReducer,
+  dialog:dialogReducer,
+  message:messageReducer,
 });
 
 export function* rootSaga() {
@@ -135,6 +152,7 @@ export function* rootSaga() {
     weekWorkout.saga(),
     category.saga(),
     event.saga(),
+    evento.saga(),
     benchmark.saga(),
     tocken.saga(),
     cartSetting.saga(),
@@ -154,8 +172,14 @@ export function* rootSaga() {
     vouchers(),
     done(),
     workout(),
+    people(),
+    post(),
+    notification(),
+    dialog(),
+    message(),
     survey.saga(),
     company.saga(),
     product.saga(),
+    report.saga(),
   ]);
 }

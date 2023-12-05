@@ -1,0 +1,128 @@
+.leaderboard-front{
+  background-color: white;
+  border-radius: 5px;
+  .title{
+    font-size: 21px;
+    padding:20px;
+    border-bottom: 1px solid #DDDDD7;
+    position: sticky;
+    top:63px;
+    background-color: white;
+    z-index: 10;
+  }  
+  .filter{
+    padding:18px 20px;
+    position: sticky;
+    top:124px;
+    background-color: white;
+    z-index: 10;
+    .item{
+      display: inline-block;
+      margin-right: 10px;
+      label{
+        font-size: 12px;
+        font-weight: 600;
+      }
+      input, select{
+        border: 1px solid #E3E3E3;
+        &:focus{
+          outline: 1px solid #E3E3E3;
+        }
+      }
+      input{
+        width:80px;
+      }
+      select{
+        background-color: white;
+      }
+    }
+  }
+  .data{
+    padding:0 20px 20px;
+    .item{
+      margin:18px 0;
+      display: flex;
+      .avatar{
+        flex:0 0 10%;
+        vertical-align: text-bottom;
+        padding-top: 2px;
+        img{
+          width:55px;
+          height:55px;
+          border-radius: 30px;
+        }
+      }
+      .name{
+        flex:0 0 46%;
+        margin-left: 20px;
+        margin-top: 10px;
+        font-size: 16px;
+        color:black;
+        font-weight: 600;
+      }
+      .position{
+        flex:0 0 10%;
+        margin-top:5px;
+        text-align: right;
+        font-size: 24px;
+        font-weight: 600;
+        color:black;
+        sup{
+          i{
+            font-size: 8px;
+          }
+        }
+      }
+      .medal{
+        flex:0 0 10%;
+        float: right;
+        margin-top: 5px;
+        img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .workout-number{
+        flex:0 0 10%;
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        color:black;
+      }
+      .workout-recent{
+        flex:0 0 10%;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color:$secondary-button-background-color;
+      }
+    }
+  }
+}
+@media (max-width: 590px) {
+  .leaderboard-front .data .item {
+    .name{
+      flex: 0 0 39%;
+    }    
+  } 
+}
+@media (max-width: 412px) {
+  .leaderboard-front .data .item {
+    .name{
+      flex: 0 0 36%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }    
+  } 
+}
+@media (max-width: 368px) {
+  .leaderboard-front .data .item {
+    .name{
+      flex: 0 0 33%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }    
+  } 
+}

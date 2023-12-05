@@ -3,6 +3,7 @@ import {
   call,
   delay,
   put,
+  select,
   takeLeading
 } from "redux-saga/effects";
 //import { cid, analytics } from '@freeletics/web-package-tracking';
@@ -12,14 +13,16 @@ import { http } from "../../services/api";
 import apiErrorMatcher from "../../../../../lib/apiErrorMatcher";
 import Facebook from "../../../../../lib/Facebook";
 import Google from "../../../../../lib/Google";
-
+import AuthService from '../../services/chat-auth';
 import {
   logInWithPassword,
   logInRequested,
   logInSucceeded,
   logInFailed,
   logInWithFacebook,
-  logInWithGoogle
+  logInWithGoogle,
+  logInWithApple,
+  logInAppleFailed
 } from "./actions";
 import { signInUser } from "../auth/actions";
 import { addAlertMessage,initialAlerts } from "../alert/actions";
@@ -183,6 +186,7 @@ function* onLogInWithGoogle() {
   let googleUser;
   try {
     googleUser = yield call(Google.logIn);
+    console.log(googleUser);
   } catch (error) {
     return { error: getGoogleErrorMessage(error) };
   }
@@ -203,7 +207,35 @@ function* onLogInWithGoogle() {
   }
   return { response };
 }
+/* Apple */
 
+const appleRequest = appleUser =>
+  http({
+    method: "POST",
+    app: "user",
+    path: "apple/login",
+    data: appleUser,
+    skipAuthentication: true
+  });
+
+function* onLogInWithApple({payload}){
+  console.log(payload)
+  let response;
+  try {
+    response = yield call(appleRequest, { access_token: payload });
+    if(response.error){
+      return { error: registerError };
+    }
+  } catch (error) {
+    switch (error.response.status) {
+      case 423:
+        return { error: registerError };
+      default:
+        return { error: getApiErrorMessage(error) };
+    }
+  }
+  return { response };
+} 
 const logInTypes = {
   [logInWithPassword]: {
     provider: "email",
@@ -216,6 +248,10 @@ const logInTypes = {
   [logInWithGoogle]: {
     provider: "google",
     requestFunction: onLogInWithGoogle
+  },
+  [logInWithApple]: {
+    provider: "google",
+    requestFunction: onLogInWithApple
   }
 };
 
@@ -269,30 +305,26 @@ function* onLogIn({ type, payload }) {
   } else {
     yield put(actions.setLanguage("es"));
   }
-  /*try {
-    const claims = yield call([Claim, 'findAll']);
-    yield put(setClaims({ claims }));
-  } catch (err) {
-    yield put(trackError(err));
-  }
- 
-  const { returnTo } = payload;
- 
-  yield spawn([cid, 'trackLogin']);
-  yield spawn([analytics, 'track'], 'login', {
-    login_method: provider,
-  });*/
 
   try {
-    // redirect to customer dashboard when purchase services,
-    // redirecdt to pricing page when not purchase services.
+    if(user.has_active_workout_subscription){
+      const accessToken = yield select(({auth}) => auth.accessToken);
+      const dataUser = { login:user.id, password:accessToken }
+      yield call(AuthService.init);
+      yield call(AuthService.signIn, dataUser, user);
+    }
   } catch (err) {
     //yield put(trackError(err));
   }
 }
-
+function* onLogInAppleFailed({payload}){
+  if(payload.error!='popup_closed_by_user'){
+    yield put(addAlertMessage({ type: "error", message: {id:"RegistrationForm.Error.Apple.error" }}));
+  }
+}
 export default function* rootSaga() {
   yield all([
-    takeLeading([logInWithPassword, logInWithFacebook, logInWithGoogle], onLogIn)
+    takeLeading([logInWithPassword, logInWithFacebook, logInWithGoogle,logInWithApple], onLogIn)
   ]);
+  yield takeLeading( logInAppleFailed, onLogInAppleFailed);
 }

@@ -7,9 +7,22 @@ import { $fetchFrontIndex,$frontPage } from "../../../../modules/subscription/ev
 export default function Blog() {
   const [activePage, setActivePage] = useState(1);
   const dispatch = useDispatch();
+  const [height, setHeight] = useState(230);
   useEffect(() => {
     dispatch($fetchFrontIndex())
+    changeDimesions();
+    setTimeout(changeDimesions,50);
+    function handleResize() {
+      changeDimesions();
+    }
+    window.addEventListener('resize', handleResize) 
+    return ()=>window.removeEventListener("resize", handleResize);   
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  const changeDimesions = ()=>{
+    console.log(window.innerWidth)
+    if(window.innerWidth>900)setHeight(window.innerWidth/4-130);
+    if(window.innerWidth<768)setHeight(window.innerWidth-150);
+  }
   const event = useSelector(({ event }) => event);
   const meta = event.frontMeta;
   const posts = event.frontData;
@@ -21,7 +34,7 @@ export default function Blog() {
     <section className="blog" id="blog">
       <div className="row">
         {posts&&posts.map((post)=>
-          <article className="col-12 col-md-4"  key={post.id}>
+          <article className="col-12 col-md-3"  key={post.id}>
             <div className="content">
               <NavLink
                   aria-label="Post"
@@ -32,16 +45,17 @@ export default function Blog() {
                   <div className="background-container">
                       <div className="background" 
                         style={{
-                          backgroundImage: "url(" + post.image + ")"
+                          backgroundImage: "url(" + post.image + ")",
+                          // height: height+"px",
                         }}
                       >
                         <h6 className="category">{post.category.name}</h6>
-                        <h4 className="post-title">{post.title}</h4>
                       </div>
                   </div>
                 </div>
               </NavLink> 
               <div className="body">
+                <h4 className="post-title">{post.title}</h4>
                 <div className="summury">
                   {post.excerpt}
                 </div>

@@ -1,53 +1,59 @@
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import { Customers } from "./Customers";
-import { CustomerDetail } from "./CustomerDetail";
-import { Subscriptions } from "./Subscriptions";
-import { SubscriptionDetail } from "./SubscriptionDetail";
-import { Transactions } from "./Transactions";
-import { BankTransferRequests } from "./BankTransferRequests";
-import { Invoices } from "./Invoices";
-import { InvoicePrint } from "./InvoicePrint";
-import { Coupons } from "./Coupons";
-import SubscriptionManager from "./SubscriptionManager";
-import { SubscriptionManagerEdit } from "./SubscriptionManagerEdit";
-import { SubscriptionCMS } from "./SubscriptionCms";
-import { SubscriptionWeekCMS } from "./SubscriptionWeekCMS";
-import { CouponCreate } from "./CouponCreate";
-import { LinkCoupons } from "./LinkCoupons";
-import { LinkCouponCreate } from "./LinkCouponCreate";
-import { LinkCouponShow } from "./LinkCouponShow";
-import { Categories} from "./Categories";
-import { CategoryCreate } from "./CategoryCreate";
-import { Events } from "./Events";
-import { EventCreate } from "./EventCreate";
-import { Shortcodes } from "./Shortcodes";
-import { ShortcodeCreate } from "./ShortcodeCreate";
-import { Keywords } from "./Keywords";
-import { KeywordCreate } from "./KeywordCreate";
-import { WeeklyEditor } from "./WeeklyEditor";
-import { Benchmarks } from "./Benchmark";
-import { BenchmarkCreate } from "./BenchmarkCreate";
-import { Users } from "./Users";
-import { UserCreate } from "./UserCreate";
-import { Medals } from "./Medals";
-import { MedalCreate } from "./MedalCreate";
-import { CartSettings } from "./SettingsPage/SectionCartSettings";
-import { Permissions } from "./SettingsPage/SectionPermissions";
-import { Referral } from "./SettingsPage/SectionReferral";
-import { TagLine } from "./SettingsPage/SectionTagLine";
-import { Reports } from "./SettingsPage/SectionReport";
-import { UserProfile } from "./UserProfile";
-import {Survey}  from "./Survey";
-import { SurveyCreate } from "./SurveyCreate";
-import {Products}  from "./Products";
-import {ViewImages}  from "./ViewImages";
-import {Companies}  from "./Companies";
-import { CompanyCreate } from "./CompanyCreate";
-import { ProductCreate } from "./ProductCreate";
-import { LayoutSplashScreen } from "../../../_metronic";
-import { SurveyReports } from "./SurveyReports";
+import { lazily } from 'react-lazily';
+const Dashboard = lazy(() =>import("./Dashboard"));
+const { Customers } = lazily(() => import('./Customers'));
+const { CustomerDetail } = lazily(() => import('./CustomerDetail'));
+const { CustomerProfile } = lazily(() => import('./CustomerProfile'));
+const { Subscriptions } = lazily(() => import('./Subscriptions'));
+const { SubscriptionDetail } = lazily(() => import('./SubscriptionDetail'));
+const { Transactions } = lazily(() => import('./Transactions'));
+const { BankTransferRequests } = lazily(() => import('./BankTransferRequests'));
+const { Invoices } = lazily(() => import('./Invoices'));
+const { InvoicePrint } = lazily(() => import('./InvoicePrint'));
+const { Coupons } = lazily(() => import('./Coupons'));
+const SubscriptionManager = lazy(() =>import("./SubscriptionManager"));
+const { SubscriptionManagerEdit } = lazily(() => import('./SubscriptionManagerEdit'));
+const { SubscriptionCMS } = lazily(() => import('./SubscriptionCms'));
+const { SubscriptionWeekCMS } = lazily(() => import('./SubscriptionWeekCMS'));
+const { CouponCreate } = lazily(() => import('./CouponCreate'));
+const { LinkCoupons } = lazily(() => import('./LinkCoupons'));
+const { LinkCouponCreate } = lazily(() => import('./LinkCouponCreate'));
+const { LinkCouponShow } = lazily(() => import('./LinkCouponShow'));
+const { Categories } = lazily(() => import('./Categories'));
+const { CategoryCreate } = lazily(() => import('./CategoryCreate'));
+const { Events } = lazily(() => import('./Events'));
+const { EventCreate } = lazily(() => import('./EventCreate'));
+const { Eventos } = lazily(() => import('./Eventos'));
+const { EventoCreate } = lazily(() => import('./EventoCreate'));
+const { Shortcodes } = lazily(() => import('./Shortcodes'));
+const { ShortcodeCreate } = lazily(() => import('./ShortcodeCreate'));
+const { Keywords } = lazily(() => import('./Keywords'));
+const { KeywordCreate } = lazily(() => import('./KeywordCreate'));
+const { WeeklyEditor } = lazily(() => import('./WeeklyEditor'));
+const { Benchmarks } = lazily(() => import('./Benchmark'));
+const { BenchmarkCreate } = lazily(() => import('./BenchmarkCreate'));
+const { Users } = lazily(() => import('./Users'));
+const { UserCreate } = lazily(() => import('./UserCreate'));
+const { Medals } = lazily(() => import('./Medals'));
+const { MedalCreate } = lazily(() => import('./MedalCreate'));
+const { CartSettings } = lazily(() => import('./SettingsPage/SectionCartSettings'));
+const { Permissions } = lazily(() => import('./SettingsPage/SectionPermissions'));
+const { Referral } = lazily(() => import('./SettingsPage/SectionReferral'));
+const { TagLine } = lazily(() => import('./SettingsPage/SectionTagLine'));
+const { Reports } = lazily(() => import('./SettingsPage/SectionReport'));
+const { UserProfile } = lazily(() => import('./UserProfile'));
+const { Survey } = lazily(() => import('./Survey'));
+const { SurveyCreate } = lazily(() => import('./SurveyCreate'));
+const { Products } = lazily(() => import('./Products'));
+const { ViewImages } = lazily(() => import('./ViewImages'));
+const { Companies } = lazily(() => import('./Companies'));
+const { CompanyCreate } = lazily(() => import('./CompanyCreate'));
+const { ProductCreate } = lazily(() => import('./ProductCreate'));
+const { LayoutSplashScreen } = lazily(() => import('../../../_metronic'));
+const { SurveyReports } = lazily(() => import('./SurveyReports'));
+const { SocialReports } = lazily(() => import('./SocialReports'));
+const { ProfileManagers } = lazily(() => import('./ProfileManagers'));
 
 export default function AdminPage() {
   // useEffect(() => {
@@ -55,7 +61,7 @@ export default function AdminPage() {
   // }, []) // [] - is required if you need only one call
   // https://reactjs.org/docs/hooks-reference.html#useeffect
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
+    <Suspense fallback={<LayoutSplashScreen visible={true}/>}>
       <Switch>
         {
           /* Redirect from root URL to /dashboard. */
@@ -64,6 +70,7 @@ export default function AdminPage() {
         <Route exact path="/admin/dashboard" component={Dashboard} />
         <Route exact path="/admin/customers" component={Customers} />
         <Route exact path="/admin/customers/:id" component={CustomerDetail} />
+        <Route exact path="/admin/customers/:id/profile" component={CustomerProfile} />
         <Route exact path="/admin/subscriptions" component={Subscriptions} />
         <Route exact path="/admin/subscriptions/:id" component={SubscriptionDetail} />
         <Route exact path="/admin/transactions" component={Transactions} />
@@ -94,6 +101,9 @@ export default function AdminPage() {
         <Route exact path="/admin/events" component={Events} />
         <Route exact path="/admin/events/create" component={EventCreate} />
         <Route exact path="/admin/events/:id" component={EventCreate} />
+        <Route exact path="/admin/eventos" component={Eventos} />
+        <Route exact path="/admin/eventos/create" component={EventoCreate} />
+        <Route exact path="/admin/eventos/:id" component={EventoCreate} />
         <Route exact path="/admin/shortcodes" component={Shortcodes} />
         <Route exact path="/admin/shortcodes/create" component={ShortcodeCreate} />
         <Route exact path="/admin/shortcodes/:id" component={ShortcodeCreate} />
@@ -123,7 +133,7 @@ export default function AdminPage() {
         <Route exact path="/admin/survey/:id" component={SurveyCreate} />
         <Route exact path="/admin/survey/create" component={SurveyCreate}/>
         <Route exact path="/admin/survey/:id/view" component={SurveyReports}/>
-        <Route exact path="/admin/Companies" component={Companies} />
+        <Route exact path="/admin/companies" component={Companies} />
         <Route exact path="/admin/companies/create" component={CompanyCreate} />
         <Route exact path="/admin/companies/:id" component={CompanyCreate} />
         <Route exact path="/admin/companies/:id/products" component={Products} />
@@ -131,6 +141,8 @@ export default function AdminPage() {
         <Route exact path="/admin/companies/:id/products/:id" component={ProductCreate} />
         <Route exact path="/admin/companies/:id/products/:id" component={ProductCreate} />
         <Route exact path="/admin/companies/:id/products/viewImages/:id" component={ViewImages} />
+        <Route exact path="/admin/reports" component={SocialReports} />
+        <Route exact path="/admin/managers" component={ProfileManagers} />
       </Switch>
     </Suspense>
   );

@@ -47,7 +47,7 @@
       min-height: 100vh;
       .modal-header{
         .modal-title{
-          font-size: 16px;
+          font-size: 18px;
         }
       }
     }
@@ -112,8 +112,8 @@
       }
     }
     .actions{
-      display: flex; 
-      justify-content: flex-end;
+      display: flex;
+      align-content: space-between;
       button{
         border-radius: 3px;
         box-sizing: border-box;
@@ -121,16 +121,26 @@
         margin: 10px;
         padding: 12px 40px;
         &.next{
-          border: 1px solid #1A7998;
-          background-color: #1A7998;          
+          border: 1px solid $primary-button-background-color;
+          background-color: $primary-button-background-color;          
           color:white;
           padding: 12px 80px;
+          margin-left: auto;
         }
         &.previous{
           border: 1px solid #B9B7B7;
           background-color: #ffffff;                  
           color:$basic-text-color;
           margin: 10px auto 10px 0;
+        }
+        &.create-comment{
+          background-color: $primary-button-background-color;
+          color:white;
+          &.has{
+            background-color: white;
+            color:$basic-text-color;
+            border: 1px solid #B9B7B7;
+          }
         }
       }
     }
@@ -157,10 +167,10 @@
         color:black;
         height: auto;
         &.alternate_a{
-          float:left;
+          float:right;
         }
         &.alternate_b{
-          float:right;
+          float:left;
         }
         i{
           font-size: 30px;
@@ -173,15 +183,18 @@
       position: fixed;
       bottom: 30px;
       left: calc( 50% - 200px);
+      display: block;
       .back{
         background-color: white;
         color: #333333;
         font-size: 16px !important;
+        width:197px;
       }
       .swap{
-        background-color: #1A7998;
+        background-color: $primary-button-background-color;
         color:white;
         font-size: 16px!important;
+        width:190px;
       }
     }
     .video-loading{
@@ -220,6 +233,25 @@
         }        
       }
     }
+    .create-comment-workout{
+      .content{
+        .form-control{
+          height: 122px;
+          textarea{
+            width: 100%;
+            border: 0;
+            &:focus{
+              outline-width: 0;
+            }                        
+          }
+        }
+      }
+      .form-control{
+        input{
+          width:100%;
+        }
+      }
+    }
   }
 }
 .instruction-modal{
@@ -232,6 +264,9 @@
     width: 400px;
     .modal-content{
       border:0;
+      .modal-dialog{
+        margin-bottom: 0;
+      }
       .actions{
         .btn{
           font-size:16px !important;
@@ -290,7 +325,7 @@
     .modal-dialog{
       .modal-content .modal-header{
         .modal-title{
-          font-size:15px;
+          font-size:17px;
         }
       }
     }
@@ -347,6 +382,12 @@
             padding: 3px 40px;
           }
         }
+        .open-create-post-modal{
+          width: calc(100% - 30px);
+          input{
+            width: calc(100% - 30px);
+          }
+        }
       }  
       .workout-alternate{
         text-align: center;
@@ -360,7 +401,10 @@
         width: calc(100% + 43px);
       }
       .workout-footer{
-        left: calc( 50% - 150px);
+        left: calc( 50% - 170px);
+        .swap, .back{
+          width:150px;
+        }
         .active{
           padding: 3px 10px;
         }

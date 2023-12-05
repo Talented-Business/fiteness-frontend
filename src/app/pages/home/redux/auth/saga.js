@@ -1,4 +1,5 @@
 import { all, call, put, takeLatest, takeLeading } from "redux-saga/effects";
+import { reactLocalStorage } from 'reactjs-localstorage';
 import {
   authenticate,
   authenticationFailed,
@@ -15,6 +16,7 @@ import {
 } from "./actions";
 import { endProfileImageUploading } from "../done/actions";
 import {actionTypes} from '../../../../../modules/subscription/benchmark';
+import AuthService from '../../services/chat-auth';
 //import { setClaims } from '../claims/actions';
 
 //import * as User from "../../services/user";
@@ -104,10 +106,13 @@ function* onLogOut() {
 
   // Clear cookies
   yield call(clearStorage);
+  yield call(AuthService.logout);
   yield put(initialAuth());
+  reactLocalStorage.clear();
   // Reload the page
   //yield call([window.location, 'assign'], states.home());
   if(document.location.pathname==="/pricing")document.location.href="/";
+  else document.location.reload();
 }
 const sessionInAction = () =>
   http({ path: `sessions/inside`, method: "POST" }).then(

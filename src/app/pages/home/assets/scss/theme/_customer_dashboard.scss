@@ -94,7 +94,7 @@
           width: 100%;
         }
         .form-control,.flag-dropdown{
-          border-color: #b3d139;
+          border-color: $primary-button-background-color;
         }
         & ~ .description{
           margin-top: 3px;
@@ -263,7 +263,7 @@
   .modal-content {
     .modal-header {
       .modal-title {
-        font-size: 23px;
+        font-size: 18px;
         font-weight: bold;
       }
     }
@@ -294,7 +294,7 @@
         }
         .level {
           font-weight: 500;
-          color: #b3d139;
+          color: $secondary-button-background-color;
         }
         .content {
           font-size: 17px;
@@ -303,10 +303,10 @@
           text-align: left;
           white-space: pre-wrap;
           .summury{
-            color: #b3d139;
+            color: $secondary-button-background-color;
             a,div{
               font-weight: 500;
-              color: #b3d139;
+              color: $secondary-button-background-color;
               background-color: transparent;
               border: 0;
             }
@@ -331,7 +331,7 @@
             float: left;
             .arrow-decrease{
               &:before{
-                border-right-color: #b3d139!important;
+                border-right-color: $secondary-button-background-color!important;
                 margin-left: -41px;
               }
             }
@@ -342,7 +342,7 @@
             .arrow-increase{
               right: 31px;
               &:before{
-                border-left-color: #b3d139!important;
+                border-left-color: $secondary-button-background-color!important;
               }
             }
           }
@@ -352,7 +352,7 @@
               padding: 5px 10px ;
               font-size: 17px;
               font-weight: 500;
-              background-color: #b3d139;
+              background-color: $secondary-button-background-color;
               border: 0;
               &:hover{
                 color:white;

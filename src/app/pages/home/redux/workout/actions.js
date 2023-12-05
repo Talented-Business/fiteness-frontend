@@ -12,6 +12,9 @@ export const {
   confirmAlternate,
   confirmModalNo,
   confirmModalYes,
+  pulling,
+  setPublic,
+  goCreateComment
 } = createActions(
   "INITIAL_MODAL_BLOCK",
   "NEXT_MODAL_BLOCK",
@@ -24,5 +27,8 @@ export const {
   "CONFIRM_ALTERNATE",
   "CONFIRM_MODAL_NO",
   "CONFIRM_MODAL_YES",
+  "PULLING",
+  "SET_PUBLIC",
+  "GO_CREATE_COMMENT",
   { prefix: "WORKOUT" }
 );

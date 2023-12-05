@@ -1,10 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import MetaTags from "react-meta-tags";
 import {Row} from "react-bootstrap";
 import {Col} from "react-bootstrap";
-import SVG from "react-inlinesvg";
 
-import ThreeColumn from "./layouts/Three";
+import TwoColumn from "./layouts/Two";
 import PageHeader from "./layouts/PageHeader";
 import Account from "./sections/Profile/Account";
 import Details from "./sections/Profile/Details";
@@ -12,8 +12,16 @@ import Objective from "./sections/Profile/Objective";
 import Subscription from "./sections/Profile/Subscription";
 import Email from "./sections/Profile/Email";
 import { toAbsoluteUrl } from "../../../_metronic/utils/utils";
+import "./assets/scss/theme/style.scss";
+import "./assets/scss/theme/mbr-additional.css";
+import "./assets/scss/dropdown/style.css";
+import "./assets/scss/theme/common.scss";
+import "./assets/scss/theme/login.scss";
+import "./assets/scss/theme/signup.scss";
 
-const ProfilePage = () => (
+const ProfilePage = () => {
+  const currentUser = useSelector(({ auth }) => auth.currentUser);
+  return(
   <>
     <MetaTags>
       <title>Profile -Fitemos </title>
@@ -22,8 +30,8 @@ const ProfilePage = () => (
         content="Profile -Fitemos"
       />
     </MetaTags>
-    <ThreeColumn>
-      <PageHeader title={`Mi Cuenta`}/>
+    <TwoColumn>
+      <PageHeader title={`Mi Cuenta`} backUrl={`/${currentUser.customer.username}`}/>
       <Row className="profile">
         <Col xs={12} md={6}>
           <Account />
@@ -50,8 +58,8 @@ const ProfilePage = () => (
         </a>
 
       </div>
-    </ThreeColumn>
+    </TwoColumn>
   </>
-);
+)};
 
 export default ProfilePage;

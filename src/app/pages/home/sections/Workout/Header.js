@@ -5,6 +5,7 @@ import {Modal, Form, Button } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../../../_metronic/utils/utils";
 import { findWorkouts,initialBlock,doneQuestion,stopRunning } from "../../redux/done/actions";
 import SurveyModal from "./SurveyModal";
+import MemberModalComponent from '../../ExplorePage/Member/ModalComponent';
 
 const Header = ()=>{
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Header = ()=>{
   const survey = useSelector(({done})=>done.survey);
   const [show, setShow] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
-  const [question, setQuestion] = useState(false);
+  const [question, setQuestion] = useState('recommend');
   const changeConfirm = ()=>{
     if(isRunning){
       if(window.confirm("El reloj aún sigue corriendo. ¿Deseas avanzar?") ===false)return false;
@@ -50,36 +51,39 @@ const Header = ()=>{
   },[survey]);// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className="workout-header">
-      {workouts&&(workouts.previous?(
-        <>
-          <span className="active" onClick={()=>{if(changeConfirm())clickDate(workouts.previous.today)}}> <i className="fas fa-angle-left"></i> </span>
-          <span className="mobile-full-screen" onClick={goBackIntroduction}> <i className="fas fa-angle-left"></i> </span>
-        </>
-      ):(
-        <span> <i className="fas fa-angle-left"></i> </span>
-      ))}
-      <span className="workout-date">
-      {
-        workouts&&workouts.current&&(
-          workouts.current.short_date
-        )
-      }
-      </span>
-      {workouts&&(workouts.next?(
-        <span className="active" onClick={()=>{if(changeConfirm())clickDate(workouts.next.today)}}> <i className="fas fa-angle-right"></i> </span>
-      ):(
-        <span> <i className="fas fa-angle-right"></i> </span>
-      ))}
+      <b style={{fontSize:"21px"}}>Workout del día</b>
       {
         workouts&&workouts.current&&(
           workouts.current.read?(
-            <SVG src={toAbsoluteUrl("/media/icons/svg/Mark/checked.svg")} style={{float:'right'}} className="mt-sm-2"/>
+            <SVG src={toAbsoluteUrl("/media/icons/svg/Mark/checked.svg")} className="ml-2 ml-md-5 mr-md-5 mb-2" style={{width:"25px",height:"25px"}}/>
           ):(
-            <SVG src={toAbsoluteUrl("/media/icons/svg/Mark/unchecked.svg")} style={{float:'right'}} className="mt-sm-2"/>
+            <SVG src={toAbsoluteUrl("/media/icons/svg/Mark/unchecked.svg")} className="ml-2 ml-md-5 mr-md-5 mb-2" style={{width:"25px",height:"25px"}}/>
           )
         )
       }
-      {currentUser&&currentUser.customer.qbligatory_question==null&&(
+      <div style={{float:"right"}}>
+        {workouts&&(workouts.previous?(
+          <>
+            <span className="active" onClick={()=>{if(changeConfirm())clickDate(workouts.previous.today)}}> <i className="fas fa-angle-left"></i> </span>
+            <span className="mobile-full-screen" onClick={goBackIntroduction}> <i className="fas fa-angle-left"></i> </span>
+          </>
+        ):(
+          <span> <i className="fas fa-angle-left"></i> </span>
+        ))}
+        <span className="workout-date">
+        {
+          workouts&&workouts.current&&(
+            workouts.current.short_date
+          )
+        }
+        </span>
+        {workouts&&(workouts.next?(
+          <span className="active" onClick={()=>{if(changeConfirm())clickDate(workouts.next.today)}}> <i className="fas fa-angle-right"></i> </span>
+        ):(
+          <span> <i className="fas fa-angle-right"></i> </span>
+        ))}
+      </div>
+      {currentUser&&(
         <Modal
           show={show}
           className="qbligatory-question-modal"
@@ -90,46 +94,52 @@ const Header = ()=>{
         >
           <Modal.Header closeButton>
             <Modal.Title className="text-center w-100">
-              ¿Cómo nos conociste?
+              ¡Bienvenido a Fitemos!
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Check 
-                  type={'radio'}
-                  id={`recommend`}
-                  label={`Me lo recomendaron`}
-                  onChange={handleOptionChange}
-                  value="recommend"
-                  checked={question === "recommend"}
-                />
-                <Form.Check 
-                  type={'radio'}
-                  id={`advertise`}
-                  label={`Me llegó la publicidad`}
-                  onChange={handleOptionChange}
-                  value="advertise"
-                  checked={question === "advertise"}
-                />
-                <Form.Check 
-                  type={'radio'}
-                  id={`long`}
-                  label={`Los conozco hace un tiempo`}
-                  onChange={handleOptionChange}
-                  value="long"
-                  checked={question === "long"}
-                />
-              </Form.Group>
-              <Button
-                type="button"
-                onClick={handleConfirm}
-                className="blue-btn"
-                style={{ margin: "10px auto", fontSize: "17px", width: "auto" }}
-              >
-                Aceptar
-              </Button>
-            </Form>
+            {currentUser.customer.qbligatory_question==null&&(
+              <>
+              <h2>¿Cómo nos conociste?</h2>
+              <Form>
+                <Form.Group>
+                  <Form.Check 
+                    type={'radio'}
+                    id={`recommend`}
+                    label={`Me lo recomendaron`}
+                    onChange={handleOptionChange}
+                    value="recommend"
+                    checked={question === "recommend"}
+                  />
+                  <Form.Check 
+                    type={'radio'}
+                    id={`advertisea`}
+                    label={`Me llegó la publicidad`}
+                    onChange={handleOptionChange}
+                    value="advertise"
+                    checked={question === "advertise"}
+                  />
+                  <Form.Check 
+                    type={'radio'}
+                    id={`long`}
+                    label={`Los conozco hace un tiempo`}
+                    onChange={handleOptionChange}
+                    value="long"
+                    checked={question === "long"}
+                  />
+                </Form.Group>
+                <Button
+                  type="button"
+                  onClick={handleConfirm}
+                  className="blue-btn"
+                  style={{ margin: "10px auto", fontSize: "17px", width: "auto" }}
+                >
+                  Aceptar
+                </Button>
+                </Form>
+              </>
+            )}
+            <MemberModalComponent />
           </Modal.Body>
         </Modal>
       )

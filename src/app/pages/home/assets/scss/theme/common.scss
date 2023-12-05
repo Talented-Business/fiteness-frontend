@@ -1,5 +1,6 @@
 @import "./mixin.scss";
 @import "./_navbar.scss";
+@import "./_navbar_social.scss";
 @import "./_banner.scss";
 @import "./_boxes.scss";
 @import "./_guide.scss";
@@ -10,6 +11,7 @@
 @import "./contact_us";
 @import "./_customer_dashboard";
 @import "./_settings.profile.scss";
+@import "./_explore.scss";
 @import "./_footer.scss";
 @import "./_checkout.scss";
 @import "./_blog.scss";
@@ -28,33 +30,53 @@
 @import "./_shop";
 @import "./_company";
 @import "./_product";
+@import "./_evento";
+@import "./_read_more";
 @import "./_footer_checkout.scss";
+@import "./_leaderboard.scss";
+@import "./social/index";
+@import "./explore/index";
+a,
+a:hover {
+  color: $primary-button-background-color;
+}
+#root{
+  background-color: #f3f3f3;
+}
 .fs-btn {
   border-radius: 7px;
-  background: linear-gradient(90deg, #028fb4, #bfd734);
+  background: $primary-button-background-color;
   border: 0;
   &:hover {
-    background: linear-gradient(90deg, #187688, #97c84f);
+    background: $primary-button-hover-background-color;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2) !important;
   }
 }
 .fs-home-btn {
   border-radius: 7px;
-  background: linear-gradient(90deg,#B62602,#D76F33);
+  // background: linear-gradient(90deg,#B62602,#D76F33);
   border: 0;
   &:hover {
-    background: linear-gradient(90deg, #d62302,#D36F23);
+    // background: linear-gradient(90deg, #d62302,#D36F23);
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2) !important;
   }
 }
 .btn-fs-blue{
-  background-color: #1A7998;
+  background-color: $primary-button-background-color;
   color:white;
   &:hover {
-    background-color: #1A7998;
+    background-color: $primary-button-hover-background-color;
     color:white;
   }
 }
+.btn-fs-waring {
+  background: #B62602;
+  &:hover {
+    background: #d62302;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2) !important;
+  }
+}
+
 .header-title {
   font-size: $bg-title-size;
   font-weight: 700;
@@ -81,13 +103,37 @@ h3 {
   cursor: pointer;
 }
 .btn-primary, .btn-primary:active {
-  background-color: #1A7998 !important;
-  border-color: #1A7998 !important;
+  background-color: $primary-button-background-color !important;
+  border-color: $primary-button-background-color !important;
 }
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary.active {
+  color: #ffffff !important;
+  background-color: $primary-button-hover-background-color !important;
+  border-color: $primary-button-hover-background-color !important;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  color: #ffffff !important;
+  background-color: $primary-button-hover-background-color !important;
+  border-color: $primary-button-hover-background-color !important;
+}
+
+
 .btn-custom, .btn-custom:active {
   border: 1px solid #B9B7B7;
   background-color: #ffffff;
   color: #333333;
+}
+.btn-custom-secondary, .btn-custom-secondary:active{
+  background-color: #F5F6F7;
+  color: #333333;
+}
+.btn-custom-third,.btn-custom-third:active{
+  background-color: $secondary-button-background-color;
+  color: white;
 }
 @media (max-width: 767px) {
   .header-title {
@@ -140,5 +186,81 @@ h3 {
 .modal .modal-content .modal-header.close-button-center {
   .close{
     margin-left:-34px;
+  }
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.textarea-pre{
+  white-space: pre-line;
+}
+.dropdown-menu-right{
+  left:auto!important;
+}
+.font-size-14{
+  font-size: 14px;
+}
+.modal-backdrop{
+  &.show{
+    opacity: 0.8;
+  }
+}
+.modal-dialog{
+  .back{
+    font-size: 18px;
+    border-radius: 15px;
+    background-color: #E5E7EB;
+    width:30px;
+    margin: -3px 10px 0 0;
+    display: inline-block;
+    i{
+      font-size: 15px;
+      margin-left: 6px;
+    }
+  }
+}
+.page-title{
+  .back{
+    font-size: 24px;
+    border-radius: 15px;
+    background-color: #E5E7EB;
+    width:27px;
+    margin: -3px 10px 0 0;
+    display: inline-block;
+    i{
+      font-size: 18px;
+      margin-left: 5px;
+    }
+  }
+}
+.event .title{
+  .back{
+    font-size: 17px;
+    border-radius: 15px;
+    background-color: #E5E7EB;
+    width:25px;
+    margin: -3px 10px 0 0;
+    display: inline-block;
+    i{
+      font-size: 15px;
+      margin-left: 6px;
+    }
+  }
+}
+.vh-centered{
+  display:flex;
+  align-items: center;
+  justify-content: center;  
+}
+.dropdown-menu.showmenu{
+  display: block;
+}
+.image-picker{
+  outline: none;
+  label{
+    outline: none;
+    div{
+      outline: none;
+    }
   }
 }

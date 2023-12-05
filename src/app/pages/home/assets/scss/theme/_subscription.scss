@@ -2,7 +2,7 @@
   justify-content: center;
   padding-top: 80px;
   padding-bottom: 80px;
-  background-image: url("../../img/subscription-banner.png");
+  background-image: url("../../img/pricing-banner.jpg");
   background-position: center top;
   background-size: cover;
   background-repeat: no-repeat;
@@ -17,16 +17,19 @@
       padding: 16px 0;
       cursor: pointer;
       &.active {
-        background-color: #156376!important;
+        background-color: $primary-button-background-color;
         color: white;
         cursor: auto;
+        &:hover{
+          background-color: $primary-button-hover-background-color;
+        }
       }
       h2 {
         font-size: 30px;
         font-style: italic;
       }
       &:hover{
-        background-color: #c8dc50;
+        background-color: $secondary-button-background-color;
       }
     }
     .free-plan .fs-btn {
@@ -54,6 +57,9 @@
           line-height: 2.3;
           ul{
             list-style: none;
+            li i{
+              color:$primary-button-background-color;
+            }
           }
         }
       }
@@ -110,6 +116,12 @@
             width: 97%;
             padding-left: 0px;
             padding-right: 0px;
+            background: $secondary-button-background-color!important;
+            border: 0;
+            &:hover {
+              background: $secondary-button-background-color !important;
+              box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.2) !important;
+            }          
           }
           a{
             color:#156376;
@@ -125,8 +137,8 @@
         top: 0px;
         right: 0%;
         .border-line {
-          border-top: solid 20px #c8dc50;
-          border-right: solid 20px #c8dc50;
+          border-top: solid 20px $primary-button-background-color;
+          border-right: solid 20px $primary-button-background-color;
           float: right;
           width: 103px;
           height: 163px;
@@ -250,8 +262,8 @@
         }
         .border-line-container {
           .border-line {
-            border-top: solid 15px #c8dc50;
-            border-right: solid 15px #c8dc50;
+            border-top: solid 15px $primary-button-background-color;
+            border-right: solid 15px $primary-button-background-color;
             float: right;
             width: 56px;
             height: 94px;

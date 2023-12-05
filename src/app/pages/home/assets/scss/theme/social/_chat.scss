@@ -1,0 +1,539 @@
+@import "../../../../../../../_metronic/_assets/sass/config";
+@import "../../../../../../../_metronic/_assets/sass/global/init";
+$fitemos-chat-panel: (
+  self: (
+    padding: 0,
+    bg-color: #fff,
+    shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13),
+    offcanvas: (
+      layout: (
+        self: (
+          zindex: 1001,
+          direction: right,
+          transition: all 0.3s ease,
+          width: 425px
+        ),
+        close: (
+          size: 25px,
+          font-size: 1.4rem
+        )
+      ),
+      skin: (
+        self: (
+          bg-color: #ffffff,
+          shadow: 0px 1px 9px -3px rgba(0, 0, 0, 0.75)
+        ),
+        overlay: (
+          bg-color: rgba(#000000, 0.1)
+        ),
+        close: (
+          icon-color: (
+            default: #968ad4,
+            hover: #ffffff
+          ),
+          bg-color: (
+            default: darken(#f8f8fb, 5%),
+            hover: kt-brand-color()
+          )
+        )
+      )
+    )
+  )
+);
+
+@include kt-offcanvas-build(
+  fitemos-chat-panel,
+  default,
+  kt-get($fitemos-chat-panel, self, offcanvas)
+);
+.fitemos-chat-panel{
+  margin-left: auto;
+  right:0!important;
+  overflow-y:unset;
+  &.modal.show{
+    display: contents !important;
+  }
+  .modal-dialog{
+    width: 0;
+    height: 0;
+  }
+  .notification-title{
+    margin: 10px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color:$secondary-text-color;
+  }  
+  .new-chat{
+    border: 0;
+    margin: 10px;
+    padding:5px;
+    font-size: 18px;
+    width: 96%;
+    display: inline-block;
+  }
+  .kt-notification-v2{
+    .kt-notification-v2__item{
+      &:hover{
+        background-color: transparent;
+      }
+      .kt-notification-v2__item-icon{
+        img{
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;      
+        }
+        i.fas{
+          font-size: 15px;
+          color:rgb(162, 250, 162);
+          margin-top: 25px;
+          margin-left: -12px;          
+          &.online{
+            color:#12BA55;
+          }
+          &.offline{
+            color:rgb(133, 103, 20);
+          }
+        }
+      }
+      .kt-notification-v2__itek-wrapper{
+        .kt-notification-v2__item-title{
+          color:$secondary-text-color;
+        }
+        .kt-notification-v2__item-desc{
+          color:#707C89;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          -webkit-font-smoothing: antialiased;          
+          .info-left{
+            display: flex;
+            flex-direction: column;
+            span.last-message{
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              width: 250px;              
+            }
+          }
+          .info-right{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            p{
+              font-size:14px;
+              margin-bottom: 5px;
+            }
+            span.unread-message{
+              background-color: #1891D8;
+              color:white;
+              width: 15px;
+              height: 15px;
+              font-size: 10px;
+              border-radius: 50%;
+              text-align: center;              
+            }
+          }
+        }
+        .actions{
+          button{
+            font-size: 14px;
+            padding:0 27px;
+          }
+        }
+      }
+    }
+  }
+  .create-dialog-header{
+    display:flex;
+    margin-bottom: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;      
+    .chat-avatar{
+      width:60px;
+      height:60px;
+      border-radius: 50%;
+    }
+    button{
+      background-color: transparent;
+      border: 0;
+    }
+    .chat-title{
+      flex-grow:2;
+      margin-left:10px;
+      h3{
+        
+      }
+      .participants{
+        white-space: nowrap;
+        overflow: hidden;              
+        text-overflow: ellipsis;
+        color:rgba($basic-text-color, 0.5);
+        font-size: 12px;
+      }
+    }
+    h3{
+      display: inline-block;
+      text-align: center;
+      flex-grow:2;
+    }
+    .dropdown{
+      button{
+        padding:0;
+      }
+    }
+    .fa-bars{
+      margin-top:5px;
+      margin-right: 20px;
+      flex-grow:1;
+      color:#B9B7B7;
+    }
+    .dialog-btn{
+
+    }
+  }
+  .create-dialog-container{
+    padding: 1rem;
+    .create-dialog-body-groupinfo{
+      .image-picker{
+        label{
+          margin:auto;
+          display: flex;
+          width:120px;
+          height:120px;
+          .profile-overlay-icon{
+            margin:auto;
+          }
+        }
+      }
+      .form-wrapper{
+        margin-top: 20px;
+        margin-left: 40px;
+        margin-right: 40px;            
+        border-bottom: 1px solid rgb(213, 217, 222);
+        display: flex;
+        .dialog-name{
+          border:0;
+          outline: none;
+          display: flex;
+          flex-direction: row;
+          flex: 0 0 auto;
+          overflow: hidden auto;
+          align-items: stretch;
+          font-size: 24px;
+          text-align: center;
+        }
+        .group-name{
+          text-align: center;
+          font-size: 24px;
+          flex-grow: 4;
+        }
+        .action{
+          margin-top: 8px;
+        }
+      }      
+      .created-user{
+        color:rgba($basic-text-color, 0.5);
+        text-align: center;
+      }
+    }
+    .participants{
+      margin-top: 20px;
+      label{
+        color:rgba($basic-text-color, 0.5);
+        font-size: 12px;
+        margin-right: 20px;
+      }
+      .participant-info{
+        display: flex;
+        margin:5px 0;
+        &.other{
+          .participant-delete{
+            display:none;
+            cursor: pointer;
+            background-color: white;
+            padding: 0 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            height: 29px;
+            border: 1px solid rgba(#b2b3b8, 1)
+          }
+          &:hover{
+            .participant-delete{
+              display:block;
+            }
+          }
+        }
+        .avatar{
+          margin:5px 10px 5px 0;
+          img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;            
+          }
+        }
+        .name{
+          line-height: 49px;
+          font-size: 23px;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;                    
+          flex-grow: 4;
+        }
+      }
+    }
+    .create-dialog-body-btn{
+      margin-top: 40%;
+      text-align: center;
+    }
+    .dialog-btn{
+      .btn-fs-blue{
+        border-radius: 15px;
+        padding: 0 10px;
+        background-color:$primary-button-background-color;
+      }
+    }
+    .search-people{
+      outline:none;
+      border-radius: 4px;
+      padding:10px;
+      border: 1px solid $primary-button-background-color;
+      margin-bottom: 10px;
+      width:100%;
+    }
+    .create-dialog-body-selected-users{
+      display: flex;
+      height:67px;
+      button{
+        outline: none;
+        border: 0;
+        background-color: transparent;
+        .avatar{
+          position: relative;
+          img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+          div{
+            position: absolute;
+            top:-2px;
+            right:-2px;
+            i{
+              background-color: white;
+              border-radius: 50%;
+              color: $primary-button-background-color;
+              border: 1px solid white;
+            }
+          }
+        }
+        .first_name{
+          font-size: 10px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;                    
+        }
+      }
+    }
+    .contacted-users{
+      .contacted-user{
+        display: flex;
+        margin:5px 0;
+        cursor: pointer;
+        .avatar{
+          margin:5px 10px 5px 0;
+          img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;            
+          }
+        }
+        .name{
+          line-height: 49px;
+          font-size: 23px;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;                    
+          flex-grow: 4;
+        }
+        .checkbox{
+          margin-top: 10px;
+          &.uncheck{
+            i{
+              color:transparent;            
+            }
+          }
+          i{
+            border: 1px solid rgba($basic-text-color, 0.5);
+            padding: 1px;
+            font-size: 20px;
+            border-radius: 50%;
+            color:rgb(81, 171, 128);
+          }
+        }
+      }
+    }
+    .more-users{
+      .more-user{
+        display: flex;
+        margin:5px 0;
+        cursor: pointer;
+        .avatar{
+          margin:5px 10px 5px 0;
+          img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;            
+          }
+        }
+        .info{
+          margin-top: 9px;
+          flex-grow: 4;
+          .name,.username{
+            font-size: 13px;
+            color:rgba($basic-text-color, 0.5)
+          }
+        }
+        .checkbox{
+          margin-top: 10px;
+          &.uncheck{
+            i{
+              color:transparent;            
+            }
+          }
+          i{
+            border: 1px solid rgba($basic-text-color, 0.5);
+            padding: 1px;
+            font-size: 20px;
+            border-radius: 50%;
+            color:rgb(81, 171, 128);
+          }
+        }
+      }
+    }
+  }
+  .kt-notification-v2{
+    .menu-container{
+      position: fixed;
+      z-index: 10;;
+      background-color: rgba(#f2f3f8, 0.9);
+      border-radius: 3px;
+      ul{
+        list-style-type: none;
+        margin-bottom: 0px;
+        li{
+          margin-left: -40px;
+          padding: 3px 10px;
+          &:hover{
+            cursor: pointer;
+            background-color: rgba($basic-text-color, 0.1);;
+          }
+        }
+      }
+    }
+  }
+  .dialog-loader{
+    img{
+      width: 50px;
+      height: 50px;
+      display: block;
+      margin: auto;
+    }
+  }
+  .dialogs-header{
+    padding: 10px;
+    i{
+      color:rgba($basic-text-color, 0.8);
+      margin-right: 16px;
+    }
+    .sub-header{
+      .title{
+        display: inline-block;
+        width:calc(100% - 110px);
+        height: 45px;
+        span{
+          color:#0C2A49;
+          font-size: 20px;          
+          font-weight: 600;
+          margin-top: 4px;
+          display: inline-block;
+        }
+      }
+      .actions{
+        display: inline-block;
+        width:110px;
+        text-align: right;
+      }
+    }
+    .search-controls{
+      text-align: left;
+      display: inline-block;
+      input{
+        border-radius: 4px;
+        padding:5px;
+        border: 1px solid rgba($primary-button-background-color, 0.8);
+        outline: none;
+        width:186px;
+        &:focus{
+          border:1px solid rgba($primary-button-background-color, 1);
+        }
+      }
+      .search-close{
+        padding: 5px;
+      }
+    }
+  }
+}
+.manage-group-chat-image{
+  .modal-content{
+    width:334px;
+    .image-crop-picker-header{
+      margin-top: 17px;
+      display: flex;
+      button{
+        background-color: $primary-button-background-color;
+        margin:0 35px;
+        flex-grow: 1;
+        color:white;
+      }
+    }
+  }
+}
+.message-status-pending,.message-status-sent,.message-status-delivered{
+  color:gray;
+}
+.message-status-read{
+  color:#377DE5;
+}
+.message-status-default{
+  color:white;
+}
+@media (max-width: 767px){
+  .fitemos-chat-panel {
+    width: 100% !important;
+  }
+}
+@media (max-width: 427px){
+  .fitemos-chat-panel .dialogs-header .search-controls input{
+    width: 160px;
+  }
+}
+@media (max-width: 400px){
+  .fitemos-chat-panel .dialogs-header .search-controls input{
+    width: 150px;
+  }
+}
+@media (max-width: 390px){
+  .fitemos-chat-panel .dialogs-header .search-controls input{
+    width: 130px;
+  }
+}
+@media (max-width: 374px){
+  .fitemos-chat-panel .dialogs-header .search-controls {
+    input{ width: 120px; }
+    .search-close{ padding: 5px 0;}
+  }
+}

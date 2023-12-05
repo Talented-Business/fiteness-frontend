@@ -1,0 +1,274 @@
+.creating-post-mention{
+  .creating-post-mention__control{
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: normal;
+    .creating-post-mention__highlighter{
+      padding: 9px 0;
+      min-height: 143px;
+      outline: 0;
+      border: 0;
+      max-height: 280px;
+      overflow: auto;
+      position: absolute;
+      strong{
+        background-color: rgb(206, 228, 229);
+      }
+    }
+    .creating-post-mention__input{
+      padding: 9px 0;
+      min-height: 143px;
+      outline: 0;
+      border: 0;
+      max-height: 280px;
+      overflow: auto!important;
+      position: absolute;
+      bottom: 14px;
+    }  
+  }
+  .creating-post-mention__suggestions{
+    .creating-post-mention__suggestions__list{
+      background-color: white;
+      border: 1px solid rgba(0,0,0,0.15);
+      font-size: 10px;
+      .creating-post-mention__suggestions__item{
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        &.creating-post-mention__suggestions__item--focused{
+          background-color: #cee4e5;
+        }
+      }
+    }
+  }
+}
+.create-post{
+  .modal-dialog{
+    width:400px;
+    .modal-header{
+      border-bottom: 1px solid #F5F6F7;
+    }
+    .author{
+      display: block;
+      .avatar{
+        display: inline-block;
+        width: 30px;
+        margin-right: 10px;
+        vertical-align: top;
+      }
+      .with-location{
+        display: inline-block;
+        width: calc( 100% - 40px);
+        .follower{
+          font-weight: 600;
+        }
+        .follower:last-of-type{
+          .spot{
+            display:none;
+          }
+        }
+      }
+    }
+    .tag-followers{
+      .search{
+        border:0;
+        border-radius: 10px;
+        padding:5px;
+        width:280px;
+        background-color: #F0F2F6;
+        &:focus{
+          outline-width: 0px;
+        }
+      }
+      .MuiChip-outlinedPrimary{
+        color:$primary-button-background-color;
+        border: 1px solid $primary-button-background-color;
+      }
+      .MuiChip-deleteIconOutlinedColorPrimary{
+        color:rgba($primary-button-background-color,0.7);
+        &:hover{
+          color:$primary-button-background-color;
+        }
+      }
+      .btn-primary{
+        padding:5px;
+        margin: 0 0 5px 13px;
+      }
+      label{
+        font-size: 12px;
+      }
+      .tag-content{
+        height: 280px;
+        overflow: auto;
+      }
+      .tagged{
+        border-radius: 20px;
+        padding: 5px;
+        border: 1px solid rgba($basic-text-color,0.5);
+      }
+      ul{
+        list-style: none;
+        padding-left: 0px;        
+        margin-left: -10px;
+        li{
+          .avatar{
+            display: inline-block;
+            margin: 5px;
+            vertical-align: top;
+          }
+          .info{
+            display: inline-block;
+            margin-top: 2px;
+            .full-name{
+              width: 300px;
+              white-space: nowrap;
+              overflow: hidden;              
+              text-overflow: ellipsis;
+            }
+            .username{
+              margin-top: -3px;
+              color:rgba($basic-text-color, 0.5);
+            }
+          }        
+        }
+      }
+    }
+    .medias-container{
+      position: relative;
+      .medias-body{
+        position: relative;
+        .medias{
+          position: relative;
+          .wrapper{
+            position: absolute;
+            overflow: hidden;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            padding-top: 0;
+            .item{
+              position: relative;
+              width: 100%;
+              height: 100%;
+              word-wrap: break-word;
+              .video-react{
+                position: unset;
+                background-color: transparent;              
+                .video-react-video{
+                  object-fit: cover;  
+                }
+              }
+              &>img{
+                width:100%;
+                height: 100%;
+                object-fit: cover;
+              }
+            }
+            .additional{
+              color:white;
+              font-size: 16px;
+              font-weight: 900;
+              background-color: rgba(0, 0, 0, 0.4);
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;          
+            }
+          }
+        }
+        .actions{
+          display: none;
+          position: absolute;
+          left: 20px;
+          top:20px;
+          background-color: rgba(white,0.5);
+          border-radius: 3px;
+          padding: 0 10px;
+        }
+        &:hover{
+          opacity: 0.95;
+          .actions{
+            display: block;
+          }
+        }
+      }
+      .remove-all{
+        position: absolute;
+        right: 20px;
+        top:20px;
+        div{
+          background-color: #fff;
+          border-radius: 20px;
+          width: 26px;
+          height: 26px;
+          padding: 2px 0px 0 7.5px;
+        }
+      }
+    }
+    .manage-medias{
+      overflow: auto;
+      min-height: 200px;
+      max-height: 700px;
+      div{
+        overflow: hidden;
+        margin: 2px 0;
+        position: relative;
+        img,video{
+          width:100%;
+          height:100%;
+          object-fit: cover;
+        }
+        .actions{
+          position: absolute;
+          display: none;
+          top:20px;
+          right:20px;
+          div{
+            background-color: #fff;
+            border-radius: 20px;
+            width: 26px;
+            height: 26px;
+            padding: 2px 0px 0 7.5px;  
+          }
+        }
+        &:hover{
+          .actions{
+            display: block;
+          }
+        }
+        .video-react-control-bar{
+          position: absolute;
+        }
+      }
+    }
+    .post-saving{
+      position: absolute;
+      z-index: 40;      
+      top: calc(50% - 130px);
+      left: calc(50% - 50px);
+    }
+    .create-post-footer{
+      border-top: 1px solid #F5F6F7;
+      margin: auto -17px;
+      padding: 17px 17px 0;      
+      button.btn-primary{
+        float:right;
+        margin: 0;
+        padding: 5px 26px;
+      }
+      .emoji__button{
+        border: 0;
+        background-color: transparent;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .create-post{
+    .modal-dialog{
+      width: auto;
+      height:100vh;
+      margin: 0;
+    }
+  }  
+}

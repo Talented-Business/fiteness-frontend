@@ -1,0 +1,108 @@
+@import "../mixin.scss";
+.member{
+  max-width: 680px;
+  margin: 30px auto 0 auto;;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  .data-wrapper{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    >div{
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      padding-right: 17px;
+      box-sizing: content-box;       
+    }    
+  }
+  .item{
+    >div{
+      display: inline-block;
+      img{
+        width:64px;
+        height: 64px;
+        border-radius: 32px;
+        object-fit: cover;
+        margin-top: -16px;          
+      }
+      .name{
+        display: inline-block;
+        margin-left: 10px;
+        .fullname{
+          padding-top: 10px;
+          font-size: 14px;
+          color: $basic-text-color;
+        }
+        .username{
+          font-size: 12px;
+          color:#707C89;
+        }
+      }
+    }
+    .follow{
+      float: right;
+      margin-top: 13px;
+      margin-right: 53px;
+      border:0;
+      border-radius: 3px;
+      font-size: 14px;
+      background-color: $primary-button-background-color;
+      color:white;
+      padding: 9px;
+	  &.btn-custom-secondary {
+		background-color: white;
+		color: rgba(51,51,51,0.5);
+		border: 1px solid rgba(51,51,51,0.2);
+	  }
+    }
+  }
+}
+@media (max-width:480px){
+  .member{
+    .item{
+      .name{
+        .fullname{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}
+@media (max-width:400px){
+  .member{
+    .item{
+      .name{
+        .fullname{
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width:375px){
+  .member{
+    .item{
+      .name{
+        .fullname{
+          width: 85px;
+        }
+      }
+    }
+  }
+}
+@media (max-width:360px){
+  .member{
+    .item{
+      .name{
+        .fullname{
+          width: 60px;
+        }
+      }
+    }
+  }
+}

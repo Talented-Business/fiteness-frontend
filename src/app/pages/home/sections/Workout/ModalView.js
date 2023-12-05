@@ -9,6 +9,7 @@ import SectionNote from '../../DashboardPage/SectionNote';
 import {isMobile} from '../../../../../_metronic/utils/utils';
 import { convertVideo,convertContent, setVideo } from "../../redux/workout/actions";
 import { stopRunning } from "../../redux/done/actions";
+import CreateComment from "./CreateComment";
 
 const ModalView = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -115,31 +116,32 @@ const ModalView = ({ isOpen, onClose }) => {
                 </button>               */}
               </>
             )}
-            {/* {view==='instruction'&&(
+            {view==='comment'&&(
               <>
-                <button type="button" className={"back-button"} onClick={() => { dispatch(convertVideo())}}>
-                  <Icon name="arrowLeft" className="arrow-left" />
-                </button>              
                 <Modal.Title className="text-center w-100"> 
-                  <>Instrucciones</>
+                ¿Comenta cómo te fue?
                 </Modal.Title>
+                <button type="button" className="close" onClick={() => dispatch(convertContent())}>
+                  <span aria-hidden="true">×</span><span className="sr-only">Close</span>
+                </button>                
               </>
-            )} */}
+            )}
         </Modal.Header>
         }
         <Modal.Body>
           <div className={classnames({'d-none':view!=='content'})}>{
-              workouts&&workouts.current.blocks.map((block, index) => (
+              (workouts&&workouts.current.blocks)&&workouts.current.blocks.map((block, index) => (
                 step!==0 && step === index && (
                   <ModalBlock key={index}
                     block={block}
                     renderLine={renderLine}
+                    onHide={onHide}
                   />
                 )
               )
               )
             }
-            {workouts && step!==0 && step === workouts.current.blocks.length&&
+            {workouts && workouts.current.blocks && step!==0 && step === workouts.current.blocks.length&&
               <>
                 <CompleteView onClose={onClose}/>
               </> 
@@ -152,6 +154,9 @@ const ModalView = ({ isOpen, onClose }) => {
             <>
               {video.instruction}
             </>
+          }
+          {view==='comment'&&
+            <CreateComment onCancel={() => dispatch(convertContent())}/>
           }
         </Modal.Body>
       </Modal>

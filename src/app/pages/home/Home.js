@@ -12,9 +12,8 @@ import SectionGuide from "./sections/SectionGuide";
 import SectionPricing from "./sections/SectionPricing";
 import SectionTestimonial from "./sections/SectionTestimonial";
 import SectionInstagram from "./sections/SectionInstagram";
-import ThreeColumn from "./layouts/Three";
+import TwoColumn from "./layouts/Two";
 import { findWorkouts,initialBlock, fetchSurvey } from "./redux/done/actions";
-import PageHeader from "./layouts/PageHeader";
 import Header from "./sections/Workout/Header";
 import Body from "./sections/Workout/Body";
 
@@ -22,6 +21,9 @@ import "./assets/scss/theme/style.scss";
 import "./assets/scss/theme/mbr-additional.css";
 import "./assets/scss/dropdown/style.css";
 import "./assets/scss/theme/common.scss";
+import "./assets/scss/theme/login.scss";
+import "./assets/scss/theme/signup.scss";
+
 const Home = ({ auth,history }) => {
   if(auth.currentUser && auth.currentUser.has_active_workout_subscription===false){
     history.push('/pricing');
@@ -33,11 +35,10 @@ const Home = ({ auth,history }) => {
     dispatch(fetchSurvey());
     window.scrollTo(0,1);
   },[]);// eslint-disable-line react-hooks/exhaustive-deps
-  const tagLine = useSelector(({done})=>done.tagLine);
+  // const tagLine = useSelector(({done})=>done.tagLine);
   const step = useSelector(({done})=>done.step);
   return (
   <>
-
     {auth.currentUser&&auth.logOuting===false ? (
       auth.currentUser.has_workout_subscription?(
       <>
@@ -48,13 +49,13 @@ const Home = ({ auth,history }) => {
           content="Workout -Fitemos"
         />
         </MetaTags>
-        <ThreeColumn>
-          <PageHeader title={`Hola ${auth.currentUser.customer.first_name}`} tagLine={tagLine}/>
+        <TwoColumn>
+          {/* <PageHeader title={`Hola ${auth.currentUser.customer.first_name}`} tagLine={tagLine}/> */}
           <div className={classnames("workout",{timer:step!==0})}>
             <Header/>
             <Body/>
           </div>
-        </ThreeColumn>
+        </TwoColumn>
       </>
       ):(
         <>

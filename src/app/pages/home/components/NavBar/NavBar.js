@@ -4,7 +4,7 @@ import classnames from "classnames";
 import Avatar from "../Avatar";
 import Icon from "../Icon";
 import Logo from "../Logo";
-import CookieConsent from "../CookieConsent";
+// import CookieConsent from "../CookieConsent";
 import { Navbar, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import * as qs from 'query-string';
@@ -17,6 +17,8 @@ import {
 } from "../../redux/auth/actions";
 import { setPrivateVoucher } from "../../redux/vouchers/actions";
 import { start } from "../../redux/checkout/actions";
+import { pulling } from "../../redux/workout/actions";
+import { logOut as logOutAction } from "../../redux/auth/actions";
 import ProofButton from "../../components/ProofButton";
 import { $changeItem } from "../../../../../modules/subscription/service";
 
@@ -31,6 +33,7 @@ class NavBarVariantFull extends React.Component {
       isDrawerOpen: false
     };
     this.toggleisDrawerOpen = this.toggleisDrawerOpen.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
   componentDidMount() {
     //const offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1];
@@ -42,11 +45,14 @@ class NavBarVariantFull extends React.Component {
       loginADate.setTime(loginATime);
       const loginDate = new Date();
       loginDate.setTime(loginTime);
-      if (this.props.currentUser && loginDate < new Date()) {
-        //this.props.deleteAuthAction();
-        this.props.regenerateAuthAction();
-      } else if (this.props.currentUser && loginADate < new Date()) {
-        this.props.regenerateAuthAction();
+      if(this.props.currentUser){
+        console.log("PULLINGId")
+        this.props.pulling({id:this.props.currentUser.customer.id});
+        if (loginDate < new Date()) {
+          this.props.regenerateAuthAction();
+        } else if (loginADate < new Date()) {
+          this.props.regenerateAuthAction();
+        }
       }
     }
     const parsed = qs.parse(window.location.search);
@@ -62,7 +68,9 @@ class NavBarVariantFull extends React.Component {
       isDrawerOpen: !prevState.isDrawerOpen
     }));
   };
-
+  handleLogout = () =>{
+    this.props.logOutAction();
+  }
   render() {
     const { isDrawerOpen } = this.state;
     //const navbarClassnames = "navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm transparent ";
@@ -185,14 +193,18 @@ class NavBarVariantFull extends React.Component {
                           </li>
                         :
                           <li className="nav-item">
-                            <NavLink
+                            <a className={"nav-link link text-white display-4"}  onClick={this.handleLogout}>
+                              Cerrar sesión
+                            </a>
+
+                            {/* <NavLink
                               to="/logout"
                               className={"nav-link link text-white display-4"}
                               activeClassName="active"
                               exact
                             >
                               Cerrar Sesión
-                            </NavLink>
+                            </NavLink> */}
                           </li>
                         }
                       </ul>
@@ -204,7 +216,7 @@ class NavBarVariantFull extends React.Component {
                         className="navbar-nav nav-dropdown"
                         data-app-modern-menu="true"
                       >
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                           <NavLink
                             to="/news"
                             className={"nav-link link text-white display-4"}
@@ -213,7 +225,7 @@ class NavBarVariantFull extends React.Component {
                           >
                             Blog
                           </NavLink>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
                           <NavLink
                             to="/ayuda"
@@ -285,7 +297,7 @@ const NavBarWrapper = ({ ...props }) => {
         This <CookieConsent /> duplication is used to preserve
         vertical space under fixed nav element.
       */}
-      <CookieConsent />
+      {/* <CookieConsent /> */}
 
       <NavBarVariantFull {...props} isScroll={hideOnNavbar} />
     </section>
@@ -304,7 +316,9 @@ export const mapDispatchToProps = {
   regenerateAuthAction,
   setPrivateVoucher,
   $changeItem,
-  start
+  start,
+  pulling,
+  logOutAction
 };
 
 export default withRouter(NavBarWrapper);
